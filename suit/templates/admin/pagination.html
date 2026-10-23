@@ -4,7 +4,7 @@
 
   {% if pagination_required %}
     <nav aria-label="{% translate 'Pagination' %}">
-      <ul class="pagination pagination-sm">
+      <ul class="pagination">
         {% for i in page_range %}
           {% paginator_number cl i %}
         {% endfor %}

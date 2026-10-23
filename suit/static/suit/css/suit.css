@@ -21,8 +21,8 @@
   --suit-text: #333;
   --suit-grey: #999;
   --suit-red: #b94a48;
-  --suit-link: #0a7bb0;
-  --suit-link-hover: #055a82;
+  --suit-link: #0088cc;
+  --suit-link-hover: #005580;
   --suit-accent-1: #83b3c3;
   --suit-accent-2: #5295b0;
   --suit-accent: #3e9fc7;
@@ -48,11 +48,15 @@
   --bs-body-font-size: 1rem;
   --bs-body-line-height: 1.5;
   --bs-body-color: var(--suit-text);
+  --bs-emphasis-color: var(--suit-text);
+  --bs-emphasis-color-rgb: 51, 51, 51;
   --bs-body-bg: #fff;
   --bs-link-color: var(--suit-link);
-  --bs-link-color-rgb: 10, 123, 176;
+  --bs-link-color-rgb: 0, 136, 204;
   --bs-link-hover-color: var(--suit-link-hover);
-  --bs-link-hover-color-rgb: 5, 90, 130;
+  --bs-link-hover-color-rgb: 0, 85, 128;
+  --bs-secondary-color: #999;
+  --bs-border-color: #ccc;
   --bs-border-radius: var(--suit-radius);
 
   /* Django admin variables, used by admin/css/widgets.css (calendar,
@@ -206,9 +210,27 @@ html {
   --bs-btn-border-radius: 6px;
 }
 
-.suit .page-link {
-  --bs-pagination-active-bg: var(--suit-accent);
-  --bs-pagination-active-border-color: var(--suit-accent-dark);
+.suit .pagination {
+  --bs-pagination-padding-x: 10px;
+  --bs-pagination-padding-y: 4px;
+  --bs-pagination-font-size: 1rem;
+  --bs-pagination-color: var(--suit-link);
+  --bs-pagination-border-color: #ddd;
+  --bs-pagination-hover-bg: #f5f5f5;
+  --bs-pagination-active-bg: #49afcd;
+  --bs-pagination-active-border-color: #2f96b4;
+  --bs-pagination-disabled-color: #999;
+}
+
+/* Bootstrap 2 button metrics: 12px text, 28px high */
+.suit .btn {
+  --bs-btn-padding-y: 4px;
+  --bs-btn-padding-x: 12px;
+  --bs-btn-font-size: 1rem;
+  --bs-btn-line-height: 1.5;
+  --bs-btn-border-radius: 4px;
+  --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+  box-shadow: var(--bs-btn-box-shadow);
 }
 
 .suit .nav-tabs {
@@ -752,6 +774,7 @@ a.icon:last-child {
    ========================================================================== */
 .breadcrumb {
   --bs-breadcrumb-divider: "»";
+  --bs-breadcrumb-divider-color: #ccc;
   --bs-breadcrumb-margin-bottom: 15px;
   --bs-breadcrumb-padding-x: 15px;
   --bs-breadcrumb-padding-y: 8px;
@@ -1030,15 +1053,16 @@ input[type=submit].default:not(.btn),
   input[type=week], textarea, select) {
   display: inline-block;
   max-width: 100%;
-  padding: .3rem .6rem;
+  padding: 4px 6px;
   font-size: 1rem;
   font-weight: 400;
-  line-height: 1.5;
-  color: var(--bs-body-color);
+  line-height: 18px;
+  color: #555;
   background-color: var(--bs-body-bg);
   background-clip: padding-box;
-  border: var(--bs-border-width) solid var(--bs-border-color);
-  border-radius: var(--bs-border-radius-sm);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
   vertical-align: middle;
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
@@ -1047,11 +1071,15 @@ input[type=submit].default:not(.btn),
   input[type=url], input[type=number], input[type=tel], input[type=search],
   input[type=date], input[type=time], input[type=datetime-local], input[type=month],
   input[type=week], textarea, select):focus {
-  color: var(--bs-body-color);
+  color: #555;
   background-color: var(--bs-body-bg);
-  border-color: #8fcbe3;
+  border-color: rgba(82, 168, 236, .8);
   outline: 0;
-  box-shadow: 0 0 0 .2rem rgba(62, 159, 199, .25);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(82, 168, 236, .6);
+}
+
+.suit select {
+  box-shadow: none;
 }
 
 .suit :is(input, textarea, select):disabled,
@@ -1085,8 +1113,8 @@ input[type=submit].default:not(.btn),
 }
 
 .suit input[type=checkbox], .suit input[type=radio] {
-  width: 1rem;
-  height: 1rem;
+  width: 13px;
+  height: 13px;
   margin: 0;
   vertical-align: middle;
   accent-color: var(--suit-accent);
@@ -2123,22 +2151,8 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   flex-wrap: wrap;
   align-items: center;
   gap: .5rem;
-  padding: .5rem .75rem;
-  background: var(--suit-bg-light);
-  border: 1px solid var(--bs-border-color);
-  border-radius: var(--suit-radius);
+  margin: 20px 0 0;
   font-size: 1rem;
-}
-
-#result_list + .actions,
-.results + .actions {
-  border-top: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.results:has(+ .actions) #result_list {
-  border-bottom-left-radius: 0;
 }
 
 #changelist .actions label {
@@ -2159,8 +2173,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 }
 
 #changelist .actions select {
-  padding-top: .15rem;
-  padding-bottom: .15rem;
+  width: 220px;
 }
 
 #changelist .actions .action-counter,
@@ -2170,9 +2183,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   color: var(--bs-secondary-color);
 }
 
-#changelist .actions.selected {
-  background: var(--bs-warning-bg-subtle);
-}
+
 
 /* Pagination */
 .pagination-block {

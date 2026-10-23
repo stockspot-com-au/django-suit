@@ -35,7 +35,7 @@
       </table>
       {% if pagination_required %}
         <nav aria-label="{% translate 'Pagination' %}">
-          <ul class="pagination pagination-sm">
+          <ul class="pagination">
             {% for i in page_range %}
               {% if i == action_list.paginator.ELLIPSIS %}
                 <li class="page-item disabled"><span class="page-link">{{ action_list.paginator.ELLIPSIS }}</span></li>
