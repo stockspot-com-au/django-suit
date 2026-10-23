@@ -41,8 +41,12 @@
   --suit-box-shadow: 0 0 0 1px rgba(0, 0, 0, .07);
   --suit-white-shadow: 0 1px rgba(255, 255, 255, .5);
 
+  --suit-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
   /* Bootstrap overrides */
+  --bs-body-font-family: var(--suit-font-family);
   --bs-body-font-size: 1rem;
+  --bs-body-line-height: 1.5;
   --bs-body-color: var(--suit-text);
   --bs-body-bg: #fff;
   --bs-link-color: var(--suit-link);
@@ -97,9 +101,10 @@
   --font-family-monospace: var(--bs-font-monospace);
 }
 
-/* Admin is a dense UI: scale Bootstrap's rem based sizes down a notch */
+/* Same typography as Suit on Bootstrap 2: 12px Helvetica, 18px line height.
+   Bootstrap's rem based sizes (spacing, buttons, inputs) scale with it. */
 html {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 /* ==========================================================================
@@ -152,15 +157,15 @@ a.btn, .btn {
 }
 
 .mini, .f11 {
-  font-size: .8rem;
+  font-size: .9167rem;
 }
 
 .f12 {
-  font-size: .86rem;
+  font-size: 1rem;
 }
 
 .f14 {
-  font-size: 1rem;
+  font-size: 1.1667rem;
 }
 
 .bold {
@@ -196,7 +201,7 @@ a.btn, .btn {
 
 .alert :is(h2, h5) {
   margin: .75rem 0 .25rem;
-  font-size: 1.1rem;
+  font-size: 1.1667rem;
   font-weight: bold;
 }
 
@@ -282,7 +287,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .italic-title {
-  font-size: 1.2rem;
+  font-size: 1.4167rem;
   font-weight: normal;
   margin: 0 0 .4rem .3rem;
 }
@@ -294,7 +299,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .popup .content-title {
   display: block;
-  font-size: 1.15rem;
+  font-size: 1.3333rem;
   font-weight: bold;
   margin: 0 0 .75rem .5rem;
 }
@@ -320,7 +325,7 @@ a.icon:last-child {
   color: #d4d4d4;
   text-shadow: 0 -1px #121414;
   background: linear-gradient(to right, var(--suit-header-bg-1), var(--suit-header-bg-2));
-  font-size: .93rem;
+  font-size: 1rem;
 }
 
 .header h1 {
@@ -354,7 +359,7 @@ a.icon:last-child {
 
 .header #branding h1 {
   color: #fff;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin: 0 15px 0 13px;
   padding: 0;
@@ -625,7 +630,7 @@ a.icon:last-child {
   min-height: 60px;
   color: #666;
   background-color: var(--suit-footer-bg);
-  font-size: .8rem;
+  font-size: .9167rem;
   line-height: 1.5;
   text-shadow: var(--suit-white-shadow);
 }
@@ -670,7 +675,7 @@ a.icon:last-child {
   --bs-breadcrumb-border-radius: var(--suit-radius);
   --bs-breadcrumb-item-active-color: var(--suit-text);
   margin-top: -5px;
-  font-size: 1rem;
+  font-size: 1.1667rem;
   text-shadow: var(--suit-white-shadow);
 }
 
@@ -688,7 +693,7 @@ a.icon:last-child {
 
 /* Django admin markup, used by templates of 3rd party apps */
 .breadcrumbs {
-  font-size: 1rem;
+  font-size: 1.1667rem;
   padding: 8px 15px;
   margin: -5px 0 15px;
   background-color: #f5f5f5;
@@ -888,7 +893,7 @@ input[type=submit].default:not(.btn),
   border-radius: var(--suit-radius);
   background: var(--suit-accent);
   color: #fff;
-  font-size: .93rem;
+  font-size: 1rem;
   line-height: 1.5;
   text-decoration: none;
   cursor: pointer;
@@ -974,7 +979,7 @@ input[type=submit].default:not(.btn),
 .suit .form-control-sm, .suit .form-select-sm {
   padding-top: .2rem;
   padding-bottom: .2rem;
-  font-size: .93rem;
+  font-size: .9167rem;
 }
 
 .suit input[type=checkbox], .suit input[type=radio] {
@@ -1000,6 +1005,7 @@ input[type=submit].default:not(.btn),
 .suit .vDateField { width: 9rem; }
 .suit .vTimeField { width: 7rem; }
 .suit select:not([multiple]) { min-width: 8rem; }
+.suit .controls select:not([multiple]) { min-width: 220px; }
 
 /* Bootstrap 2 input sizes, still used in widget attrs */
 .suit .input-mini { width: 60px; }
@@ -1030,7 +1036,7 @@ fieldset.suit-fieldset {
 .suit-tab > h2, .suit-include > h2 {
   margin: 0;
   padding: 0 0 .4rem .6rem;
-  font-size: 1.15rem;
+  font-size: 1.3333rem;
   font-weight: bold;
   line-height: 1.6;
 }
@@ -1038,14 +1044,14 @@ fieldset.suit-fieldset {
 .legend .description, h2 .description {
   display: inline-block;
   margin-left: 1rem;
-  font-size: .86rem;
+  font-size: 1rem;
   font-weight: normal;
   color: var(--suit-grey);
 }
 
 .fieldset-description {
   margin: 0 0 .5rem .6rem;
-  font-size: .86rem;
+  font-size: 1rem;
   color: var(--suit-grey);
 }
 
@@ -1237,7 +1243,7 @@ details.suit-collapse:not([open]) > summary > h2 {
 /* Help and errors */
 .help, .help-block, .help-inline, .form-row .form-text {
   margin-top: .2rem;
-  font-size: .86rem;
+  font-size: .9167rem;
   line-height: 1.4;
   color: var(--suit-grey);
 }
@@ -1251,7 +1257,7 @@ details.suit-collapse:not([open]) > summary > h2 {
   list-style: none;
   margin: .2rem 0 0;
   padding: 0;
-  font-size: .86rem;
+  font-size: .9167rem;
   color: var(--bs-danger);
 }
 
@@ -1314,7 +1320,7 @@ td.errors :is(input, select, textarea) {
 }
 
 .linked-select-link {
-  font-size: .86rem;
+  font-size: .9167rem;
 }
 
 /* Raw id lookups */
@@ -1331,7 +1337,7 @@ td.errors :is(input, select, textarea) {
   align-items: center;
   gap: 2px;
   margin-left: 2px;
-  font-size: .86rem;
+  font-size: .9167rem;
   white-space: nowrap;
 }
 
@@ -1406,7 +1412,7 @@ p.datetime {
 .suit-date > .datetimeshortcuts > a:first-child {
   align-self: center;
   margin-left: .6rem;
-  font-size: .86rem;
+  font-size: .9167rem;
 }
 
 .suit-date .datetimeshortcuts :is(.date-icon, .clock-icon) {
@@ -1433,7 +1439,7 @@ p.datetime {
 .suit-date .datetimeshortcuts .clock-icon::before { content: "\f293"; }
 
 .timezonewarning {
-  font-size: .8rem;
+  font-size: .9167rem;
 }
 
 /* Django 6.1+ inserts the timezone warning before the widget */
@@ -1483,7 +1489,7 @@ p.datetime {
 }
 
 .suit .selector :is(select, input) {
-  font-size: .93rem;
+  font-size: 1rem;
 }
 
 .suit .selector :is(h2, label) {
@@ -1516,7 +1522,7 @@ p.datetime {
 .suit .selector :is(.selector-available, .selector-chosen) > h2 {
   margin: 0;
   padding: 8px;
-  font-size: .93rem;
+  font-size: 1rem;
   font-weight: normal;
   line-height: 1.4;
 }
@@ -1535,7 +1541,7 @@ p.datetime {
   align-items: center;
   gap: .3rem;
   margin-left: .75rem;
-  font-size: .86rem;
+  font-size: .9167rem;
   color: var(--suit-grey);
 }
 
@@ -1546,11 +1552,24 @@ p.datetime {
 /* Form tabs
    -------------------------------------------------------------------------- */
 .nav-tabs-suit {
+  gap: 2px;
   margin-bottom: 15px;
 }
 
+/* Boxed tabs, as in Suit on Bootstrap 2 */
 .nav-tabs-suit .nav-link {
-  padding: .45rem 1.1rem;
+  margin-bottom: -1px;
+  padding: .6667rem 1.6667rem;
+  font-size: 1.0833rem;
+  line-height: 1.5;
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  border-bottom-color: var(--bs-border-color);
+}
+
+.nav-tabs-suit .nav-link:hover {
+  background: var(--suit-bg-light);
+  border-color: #d5d5d5 #d5d5d5 var(--bs-border-color);
 }
 
 .nav-tabs-suit .nav-link.error, .nav-tabs-suit .nav-link.error:hover {
@@ -1559,8 +1578,9 @@ p.datetime {
 
 .nav-tabs-suit .nav-link.active {
   font-weight: bold;
+  color: var(--suit-text);
   background: var(--suit-bg);
-  border-bottom-color: var(--suit-bg);
+  border-color: var(--bs-border-color) var(--bs-border-color) var(--suit-bg);
 }
 
 .suit-form.has-tabs .suit-tab:not(.show) {
@@ -1592,7 +1612,7 @@ p.datetime {
 /* Tabular */
 .inline-related.tabular .table {
   background: #fff;
-  font-size: .93rem;
+  font-size: 1rem;
 }
 
 .inline-related.tabular .table > :not(caption) > * > * {
@@ -1665,7 +1685,7 @@ a.inline-deletelink {
   text-indent: 0;
   background: none;
   color: var(--bs-danger);
-  font-size: .86rem;
+  font-size: .9167rem;
   text-decoration: none;
 }
 
@@ -1688,7 +1708,7 @@ a.inline-deletelink::before {
   gap: .25rem .75rem;
   margin: 0;
   padding: .45rem .9rem;
-  font-size: .93rem;
+  font-size: 1rem;
   font-weight: normal;
   background: linear-gradient(#f3f3f3, #e5e5e5);
   border-radius: var(--suit-radius) var(--suit-radius) 0 0;
@@ -1724,7 +1744,7 @@ a.inline-deletelink::before {
 
 .inline-related:not(.tabular) fieldset.suit-fieldset .legend {
   padding-top: .6rem;
-  font-size: 1rem;
+  font-size: 1.1667rem;
 }
 
 .inline-related:not(.tabular) fieldset.suit-fieldset.first > .fieldset-body {
@@ -1841,7 +1861,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   --bs-breadcrumb-divider: "|";
   --bs-breadcrumb-bg: var(--suit-bg-light);
   margin: 0 0 .75rem;
-  font-size: .93rem;
+  font-size: 1rem;
   box-shadow: var(--suit-box-shadow);
 }
 
@@ -1849,7 +1869,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 #result_list {
   margin-bottom: 0;
   background: #fff;
-  font-size: .93rem;
+  font-size: 1rem;
 }
 
 .results {
@@ -1858,9 +1878,20 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 
 #result_list thead th {
   position: relative;
-  white-space: nowrap;
   vertical-align: middle;
   background: var(--suit-bg-light);
+}
+
+#result_list tbody th {
+  font-weight: normal;
+}
+
+#result_list a {
+  text-decoration: none;
+}
+
+#result_list a:hover {
+  text-decoration: underline;
 }
 
 #result_list thead th .text a {
@@ -1878,7 +1909,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   align-items: center;
   gap: 2px;
   margin-left: .5rem;
-  font-size: .86rem;
+  font-size: .9167rem;
 }
 
 #result_list thead th .sortoptions a {
@@ -1891,7 +1922,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 }
 
 #result_list thead th .sortpriority {
-  font-size: .75rem;
+  font-size: .8333rem;
   color: var(--suit-grey);
 }
 
@@ -1945,7 +1976,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   background: var(--suit-bg-light);
   border: 1px solid var(--bs-border-color);
   border-radius: var(--suit-radius);
-  font-size: .93rem;
+  font-size: 1rem;
 }
 
 #result_list + .actions,
@@ -2018,7 +2049,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 .table-overview caption {
   caption-side: top;
   padding: 0 0 .35rem .3rem;
-  font-size: 1.2rem;
+  font-size: 1.3333rem;
   color: inherit;
   text-shadow: var(--suit-white-shadow);
 }
@@ -2079,7 +2110,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   display: block;
   padding: 5px 10px 5px 32px;
   position: relative;
-  font-size: .86rem;
+  font-size: .9167rem;
   border-bottom: 1px solid #f3f3f3;
   overflow-wrap: anywhere;
 }
@@ -2124,7 +2155,7 @@ body.login #content-main {
 .login-box .card-header {
   margin: 0;
   padding: .55rem 15px;
-  font-size: 1.1rem;
+  font-size: 1.1667rem;
   font-weight: normal;
   color: #fff;
   text-shadow: 0 1px #4f7f92;
@@ -2169,7 +2200,7 @@ body.login #content-main {
 }
 
 .suit-error h1 {
-  font-size: 3.4rem;
+  font-size: 4rem;
   font-weight: 700;
   letter-spacing: -2px;
   margin-bottom: 1.5rem;
@@ -2177,14 +2208,14 @@ body.login #content-main {
 
 .suit-error .suit-error-code {
   float: right;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 700;
   letter-spacing: -2px;
   color: rgba(0, 0, 0, .2);
 }
 
 .suit-error .content {
-  font-size: 1.15rem;
+  font-size: 1.3333rem;
 }
 
 .suit-error-actions {
