@@ -15,13 +15,14 @@ setup(
     packages=['suit', 'suit.templatetags'],
     python_requires='>=3.10',
     install_requires=[
-        'Django>=5.2,<6.2',
+        'Django>=4.2,<6.2',
     ],
     zip_safe=False,
     include_package_data=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: Django',
+        'Framework :: Django :: 4.2',
         'Framework :: Django :: 5.2',
         'Framework :: Django :: 6.0',
         'Framework :: Django :: 6.1',

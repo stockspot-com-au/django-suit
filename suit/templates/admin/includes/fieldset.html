@@ -1,17 +1,17 @@
 {% load suit_tags %}
 <fieldset class="module aligned suit-fieldset{{ fieldset.name|yesno:' with-legend, first' }} {{ fieldset.classes|suit_fieldset_classes }}"{% if fieldset.name %} aria-labelledby="{{ prefix }}-{{ id_prefix }}-{{ id_suffix }}-heading"{% endif %}>
   {% if fieldset.name %}
-    {% if fieldset.is_collapsible %}<details class="suit-collapse"><summary>{% endif %}
+    {% if fieldset|suit_collapsible %}<details class="suit-collapse"{% if fieldset.classes|suit_has_class:"open" %} open{% endif %}><summary>{% endif %}
     <h2 id="{{ prefix }}-{{ id_prefix }}-{{ id_suffix }}-heading" class="legend fieldset-heading">{{ fieldset.name }}
       {% if fieldset.description %}<span class="description">{{ fieldset.description|safe }}</span>{% endif %}
     </h2>
-    {% if fieldset.is_collapsible %}</summary>{% endif %}
+    {% if fieldset|suit_collapsible %}</summary>{% endif %}
   {% elif fieldset.description %}
     <div class="description fieldset-description">{{ fieldset.description|safe }}</div>
   {% endif %}
   <div class="fieldset-body">
   {% for line in fieldset %}
-    <div class="form-row control-group{% if line.fields|length == 1 %}{% if line.errors %} errors{% endif %}{% else %} multi-field-row{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if field.field.field.widget.attrs.rowclass %} {{ field.field.field.widget.attrs.rowclass }}{% endif %}{% endfor %}">
+    <div class="form-row control-group{% if line.fields|length == 1 %}{% if line.errors %} errors{% endif %}{% else %} multi-field-row{% endif %}{% if not line|suit_line_visible %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if field.field.field.widget.attrs.rowclass %} {{ field.field.field.widget.attrs.rowclass }}{% endif %}{% endfor %}">
       {% for field in line %}
         {% if forloop.first %}
           <div class="control-label{% if not field.is_readonly and field.errors %} text-danger{% endif %}">
@@ -42,5 +42,5 @@
     </div>
   {% endfor %}
   </div>
-  {% if fieldset.name and fieldset.is_collapsible %}</details>{% endif %}
+  {% if fieldset.name and fieldset|suit_collapsible %}</details>{% endif %}
 </fieldset>

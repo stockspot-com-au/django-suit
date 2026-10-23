@@ -100,6 +100,45 @@ def suit_fieldset_classes(classes):
     return ' '.join(c for c in str(classes or '').split() if c != 'collapse')
 
 
+@register.filter
+def suit_collapsible(fieldset):
+    """
+    Fieldset / inline formset "is_collapsible" (Django 5.1+), with the same
+    logic for older Django: has the "collapse" class and no errors.
+    """
+    if hasattr(fieldset, 'is_collapsible'):
+        return fieldset.is_collapsible
+    if 'collapse' not in str(getattr(fieldset, 'classes', '') or '').split():
+        return False
+    formset = getattr(fieldset, 'formset', None)
+    if formset is not None and hasattr(fieldset, 'opts'):
+        # InlineAdminFormSet
+        return not any(formset.errors)
+    fields = set()
+    for field in fieldset.fields:
+        fields.update(field if isinstance(field, (list, tuple)) else [field])
+    return not any(field in fields for field in fieldset.form.errors)
+
+
+@register.filter
+def suit_has_class(classes, name):
+    return name in str(classes or '').split()
+
+
+@register.filter
+def suit_line_visible(line):
+    """
+    Fieldline "has_visible_field" (Django 5.0+), with the same logic for
+    older Django.
+    """
+    if hasattr(line, 'has_visible_field'):
+        return line.has_visible_field
+    return not all(
+        field in line.form.fields and line.form.fields[field].widget.is_hidden
+        for field in line.fields
+    )
+
+
 @register.simple_tag
 def suit_django_version():
     return django_version

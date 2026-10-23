@@ -5,7 +5,7 @@ Installation
 ------------
 
 
-Requirements: Python 3.10+ and Django 5.2 (LTS), 6.0 or 6.1.
+Requirements: Python 3.10+ and Django 4.2, 5.2 (LTS), 6.0 or 6.1.
 
 1. Install this fork with pip::
 
@@ -64,5 +64,5 @@ Develop branch
 Upgrading from 0.3.x
 --------------------
 
-0.4.0 moves the theme from Bootstrap 2 to Bootstrap 5 and drops support for Django < 5.2. See the 0.4.0 entry of the `changelog <https://github.com/mhindery/django-suit/blob/develop/CHANGELOG.rst>`_ for what to check in your own admin templates and CSS.
+0.4.0 moves the theme from Bootstrap 2 to Bootstrap 5 and drops support for Django < 4.2. See the 0.4.0 entry of the `changelog <https://github.com/mhindery/django-suit/blob/develop/CHANGELOG.rst>`_ for what to check in your own admin templates and CSS.
 
