@@ -1,7 +1,6 @@
 import datetime
 from django.conf import settings
 from django.test import TestCase
-from django.utils.encoding import python_2_unicode_compatible
 from suit import utils
 from suit.templatetags.suit_tags import suit_conf, suit_date, suit_time, \
     admin_url, field_contents_foreign_linked, suit_bc, suit_bc_value
@@ -10,7 +9,6 @@ from django.contrib import admin
 from django.contrib.admin.helpers import AdminReadonlyField
 
 
-@python_2_unicode_compatible
 class Country(models.Model):
     name = models.CharField(max_length=64)
 
@@ -18,7 +16,6 @@ class Country(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
 class City(models.Model):
     name = models.CharField(max_length=64)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
@@ -82,16 +79,18 @@ class SuitTagsTestCase(TestCase):
 
         # Create form
         request = None
-        form = ma.get_form(request, city)
-        form.instance = city
+        form = ma.get_form(request, city)(instance=city)
         ro_field = AdminReadonlyField(form, 'country', True, ma)
 
-        self.assertEqual(country.name,
-                         field_contents_foreign_linked(ro_field))
+        # Django links readonly foreign keys of registered models itself
+        output = field_contents_foreign_linked(ro_field)
+        self.assertIn(country.name, output)
 
-        # Now it should return as link
+        # Linked by Suit, without nesting a second link
         ro_field.model_admin.linked_readonly_fields = ('country',)
-        assert admin_url(country) in field_contents_foreign_linked(ro_field)
+        output = field_contents_foreign_linked(ro_field)
+        self.assertIn(admin_url(country), output)
+        self.assertEqual(output.count('<a '), 1)
 
     def test_suit_bc(self):
         args = [utils.django_major_version(), 'a']

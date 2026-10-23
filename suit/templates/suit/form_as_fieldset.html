@@ -1,13 +1,7 @@
-<fieldset class="module aligned">
+<fieldset class="module aligned suit-fieldset first">
+  <div class="fieldset-body">
     {% for field in form %}
-        <div class="control-group{{ field.errors|yesno:' error,' }}">
-            <div class="control-label">
-                {{ field.label_tag }}
-            </div>
-            <div class="controls">
-                {{ field }}
-                <div class="help-inline">{{ field.errors }}</div>
-            </div>
-        </div>
+      {% include 'suit/includes/field_row.html' %}
     {% endfor %}
+  </div>
 </fieldset>

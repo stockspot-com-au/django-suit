@@ -1,13 +1,8 @@
 from django.contrib import admin
-from django.utils.translation import ugettext
+from django.urls import reverse
+from django.utils.translation import gettext
 from suit.tests.mixins import ModelsTestCaseMixin, UserTestCaseMixin
 from suit.tests.models import Book, BookAdmin, test_app_label
-
-try:
-    from django.core.urlresolvers import reverse
-except ImportError:
-    # For Django >= 2.0
-    from django.urls import reverse
 
 
 app_label = test_app_label()
@@ -15,7 +10,7 @@ app_label = test_app_label()
 
 class TabbedBookAdmin(BookAdmin):
     list_filter = ('id', 'name',)
-    suit_form_tabs = (('tab1', 'Tab1'), ('tab2', ugettext('Tab2')))
+    suit_form_tabs = (('tab1', 'Tab1'), ('tab2', gettext('Tab2')))
     suit_form_includes = None
 
 
@@ -33,8 +28,10 @@ class FormTabsTestCase(ModelsTestCaseMixin, UserTestCaseMixin):
         for x in range(0, 2):
             vars = (TabbedBookAdmin.suit_form_tabs[x][0],
                     TabbedBookAdmin.suit_form_tabs[x][1])
-            self.assertContains(self.response, '<li><a href="#%s">%s</a></li>' %
-                                               vars)
+            self.assertContains(
+                self.response,
+                '<li class="nav-item"><a class="nav-link" href="#%s">%s</a></li>' % vars,
+                html=True)
 
     def test_template_includes(self):
         suit_form_include = 'admin/date_hierarchy.html'

@@ -16,20 +16,12 @@ Tests
 
 When contributing don't forget to test your code by running::
 
-    ./manage.py test suit
+    ./manage.py test suit.tests
 
-CSS/LESS
---------
+CSS
+---
 
-Contributing on specifically UI/CSS features/fixes have more requirements:
-
-* ``lessc`` compiler - http://lesscss.org/
-* ``watchdog`` package - ``pip install watchdog``
-* ``django-suit-examples`` - it may be a good idea to add `examples app <https://github.com/darklow/django-suit-examples>`_ to your project
-
-While editing ``.less`` files, run following script, which automatically watches ``.less`` files for changes and compiles them to ``suit.css``::
-
-    python suit/watch_less.py suit/static/suit/less/suit.less
+``suit/static/suit/css/suit.css`` is plain CSS on top of Bootstrap 5, edit it directly. Bootstrap and Bootstrap Icons are vendored, unmodified apart from the removed source map comments, in ``suit/static/suit/bootstrap`` and ``suit/static/suit/bootstrap-icons``.
 
 
 Related packages

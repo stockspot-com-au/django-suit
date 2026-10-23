@@ -14,14 +14,14 @@
             var $next, $prev;
             if (mptt_table) {
                 function get_padding($tr) {
-                    return parseInt($tr.find('th:first').css('padding-left'));
+                    return parseInt($tr.find('th').first().css('padding-left'));
                 }
 
                 function find_with_children($tr) {
                     var padding = get_padding($tr);
                     return $tr.nextUntil(function () {
-                        return get_padding($(this)) <= padding
-                    }).andSelf();
+                        return get_padding($(this)) <= padding;
+                    }).addBack();
                 }
 
                 $('.selected').removeClass('selected');
@@ -37,8 +37,8 @@
                     }
                 } else {
                     $prev = $row.prevUntil(function () {
-                        return get_padding($(this)) <= padding
-                    }).andSelf().first().prev();
+                        return get_padding($(this)) <= padding;
+                    }).addBack().first().prev();
                     if ($prev.length && get_padding($prev) === padding) {
                         $rows_to_move.insertBefore($prev).addClass('selected')
                     }
@@ -68,22 +68,22 @@
             e.preventDefault();
         }
 
-        function create_link(text, direction, on_click_func, is_stacked) {
-            return $('<a/>').attr('href', '#')
+        function create_link(text, direction, is_stacked) {
+            return $('<a/>').attr('href', '#').attr('role', 'button')
+                .attr('title', direction === 'up' ? 'Move up' : 'Move down')
                 .addClass('sortable sortable-' + direction +
                     (is_stacked ? ' sortable-stacked' : ''))
-                .attr('data-dir', direction).html(text)
-                .click(on_click_func);
+                .attr('data-dir', direction).html(text);
         }
 
         $inputs.each(function () {
             var $inline_sortable = $('<div class="inline-sortable"/>'),
-                icon = '<i class="icon-arrow-up icon-alpha5"></i>',
+                icon = '<i class="bi bi-arrow-up"></i>',
                 $sortable = $(this),
                 is_stacked = $sortable.hasClass('suit-sortable-stacked');
 
-            var $up_link = create_link(icon, 'up', on_arrow_click, is_stacked),
-                $down_link = create_link(icon.replace('-up', '-down'), 'down', on_arrow_click, is_stacked);
+            var $up_link = create_link(icon, 'up', is_stacked),
+                $down_link = create_link(icon.replace('-up', '-down'), 'down', is_stacked);
 
             if (is_stacked) {
                 var $sortable_row = $sortable.closest('div.form-row'),
@@ -92,7 +92,7 @@
 
                 // Add arrows to header h3, move order input and remove order field row
                 $links_span.append($up_link).append($down_link);
-                $stacked_block.find('h3').append($links_span);
+                $stacked_block.find('h3').first().append($links_span);
                 $stacked_block.append($sortable);
                 $sortable_row.remove();
             } else {
@@ -133,10 +133,9 @@
         // Update input count right before submit
         if ($inputs && $inputs.length) {
             var $last_input = $inputs.last();
-            var selector = $(this).selector;
-            $($last_input[0].form).submit(function (e) {
+            $($last_input[0].form).on('submit', function (e) {
                 var i = 0, value;
-                $(selector).each(function () {
+                $('.suit-sortable').each(function () {
                     var $input = $(this);
                     var fieldset_id = $input.attr('name').split(/-\d+-/)[0];
                     // Check if any of new dynamic block values has been added
@@ -154,9 +153,8 @@
             });
         }
 
-        Suit.after_inline.register('bind_sortable_arrows', function (prefix, row) {
-            $(row).find('.sortable').click(on_arrow_click);
-        })
+        // Delegated, so rows cloned by Django's inlines.js work too
+        $(document).off('click.suit_sortable').on('click.suit_sortable', 'a.sortable', on_arrow_click);
     };
 
 

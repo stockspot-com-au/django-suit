@@ -1,28 +1,26 @@
 {% load suit_list i18n %}
 
-{% if cl.formset and cl.result_count %}
-    <input type="submit" name="_save" class="default btn btn-info pull-right changelist-save" value="{% trans 'Save' %}"/>
-{% endif %}
-
 <div class="pagination-block">
 
   {% if pagination_required %}
-    <div class="pagination">
-      <ul>
+    <nav aria-label="{% translate 'Pagination' %}">
+      <ul class="pagination pagination-sm">
         {% for i in page_range %}
           {% paginator_number cl i %}
         {% endfor %}
       </ul>
-    </div>
+    </nav>
   {% endif %}
 
-  <div class="pagination-info muted">
+  <div class="pagination-info text-body-secondary">
     {% paginator_info cl %}
-    &nbsp; / &nbsp;
+    &nbsp;/&nbsp;
     {{ cl.result_count }}
-    {% if cl.result_count == 1 %}{{ cl.opts.verbose_name }}{% else %}
-      {{ cl.opts.verbose_name_plural }}{% endif %}
-    {% if show_all_url %}&nbsp;&nbsp;
-      <a href="{{ show_all_url }}" class="showall">{% trans 'Show all' %}</a>{% endif %}
+    {% if cl.result_count == 1 %}{{ cl.opts.verbose_name }}{% else %}{{ cl.opts.verbose_name_plural }}{% endif %}
+    {% if show_all_url %}&nbsp;&nbsp;<a href="{{ show_all_url }}" class="showall">{% translate 'Show all' %}</a>{% endif %}
   </div>
+
+  {% if cl.formset and cl.result_count %}
+    <input type="submit" name="_save" class="default btn btn-primary changelist-save" value="{% translate 'Save' %}">
+  {% endif %}
 </div>
