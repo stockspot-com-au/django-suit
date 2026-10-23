@@ -1270,12 +1270,16 @@ details.suit-collapse:not([open]) > summary > h2 {
 }
 
 /* Form rows: label column + controls column */
+/* Row separators only in the label column, the controls column is one block */
 .fieldset-body > .form-row {
   display: flex;
+}
+
+.fieldset-body > .form-row > .control-label {
   border-bottom: 1px solid var(--suit-border-light);
 }
 
-.fieldset-body > .form-row:last-child {
+.fieldset-body > .form-row:last-child > .control-label {
   border-bottom: 0;
 }
 
@@ -1290,7 +1294,7 @@ details.suit-collapse:not([open]) > summary > h2 {
 .form-row > .control-label {
   flex: 0 0 var(--suit-label-width);
   width: var(--suit-label-width);
-  padding: .6rem 1rem .5rem .75rem;
+  padding: 10px 20px 5px 10px;
   background: #fff;
   text-align: right;
   overflow-wrap: anywhere;
@@ -1304,7 +1308,7 @@ details.suit-collapse:not([open]) > summary > h2 {
 .form-row > .controls {
   flex: 1 1 auto;
   min-width: 0;
-  padding: .35rem 1rem;
+  padding: 5px 15px;
   border-left: 1px solid #ecedee;
 }
 
@@ -2451,6 +2455,12 @@ body.login #content-main {
 @media (max-width: 767.98px) {
   .fieldset-body > .form-row {
     flex-direction: column;
+    border-bottom: 1px solid var(--suit-border-light);
+  }
+
+  .fieldset-body > .form-row:last-child,
+  .fieldset-body > .form-row > .control-label {
+    border-bottom: 0;
   }
 
   .form-row > .control-label {
