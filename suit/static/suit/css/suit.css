@@ -110,16 +110,100 @@ html {
 /* ==========================================================================
    Bootstrap tweaks & Suit / Bootstrap 2 compatibility helpers
    ========================================================================== */
+/* Bootstrap 2 buttons: Suit's templates and many list_display / help_text
+   snippets use btn-info (Suit teal), btn-primary, btn-success, btn-small ... */
+.suit :is(.btn-primary, .btn-info, .btn-success, .btn-warning, .btn-danger, .btn-inverse) {
+  --bs-btn-color: #fff;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: #fff;
+  --bs-btn-disabled-color: #fff;
+  background-image: linear-gradient(var(--suit-btn-from), var(--suit-btn-to));
+  border-color: rgba(0, 0, 0, .1) rgba(0, 0, 0, .1) rgba(0, 0, 0, .25);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+}
+
+.suit :is(.btn-primary, .btn-info, .btn-success, .btn-warning, .btn-danger, .btn-inverse):is(:hover, :active, .active, :disabled, .disabled) {
+  background-image: none;
+}
+
 .suit .btn-primary {
-  --bs-btn-bg: var(--suit-accent);
-  --bs-btn-border-color: var(--suit-accent-dark);
-  --bs-btn-hover-bg: var(--suit-accent-dark);
-  --bs-btn-hover-border-color: #27779a;
-  --bs-btn-active-bg: #27779a;
-  --bs-btn-active-border-color: #226987;
-  --bs-btn-disabled-bg: var(--suit-accent);
-  --bs-btn-disabled-border-color: var(--suit-accent-dark);
-  --bs-btn-focus-shadow-rgb: 62, 159, 199;
+  --suit-btn-from: #0088cc; --suit-btn-to: #0044cc;
+  --bs-btn-bg: #006dcc; --bs-btn-hover-bg: #0044cc; --bs-btn-active-bg: #003399; --bs-btn-disabled-bg: #0044cc;
+  --bs-btn-focus-shadow-rgb: 0, 109, 204;
+}
+
+.suit .btn-info {
+  --suit-btn-from: #5bc0de; --suit-btn-to: #2f96b4;
+  --bs-btn-bg: #49afcd; --bs-btn-hover-bg: #2f96b4; --bs-btn-active-bg: #24748c; --bs-btn-disabled-bg: #2f96b4;
+  --bs-btn-focus-shadow-rgb: 73, 175, 205;
+}
+
+.suit .btn-success {
+  --suit-btn-from: #62c462; --suit-btn-to: #51a351;
+  --bs-btn-bg: #5bb75b; --bs-btn-hover-bg: #51a351; --bs-btn-active-bg: #408140; --bs-btn-disabled-bg: #51a351;
+  --bs-btn-focus-shadow-rgb: 91, 183, 91;
+}
+
+.suit .btn-warning {
+  --suit-btn-from: #fbb450; --suit-btn-to: #f89406;
+  --bs-btn-bg: #faa732; --bs-btn-hover-bg: #f89406; --bs-btn-active-bg: #c67605; --bs-btn-disabled-bg: #f89406;
+  --bs-btn-focus-shadow-rgb: 250, 167, 50;
+}
+
+.suit .btn-danger {
+  --suit-btn-from: #ee5f5b; --suit-btn-to: #bd362f;
+  --bs-btn-bg: #da4f49; --bs-btn-hover-bg: #bd362f; --bs-btn-active-bg: #942a25; --bs-btn-disabled-bg: #bd362f;
+  --bs-btn-focus-shadow-rgb: 218, 79, 73;
+}
+
+.suit .btn-inverse {
+  --suit-btn-from: #444; --suit-btn-to: #222;
+  --bs-btn-bg: #363636; --bs-btn-hover-bg: #222; --bs-btn-active-bg: #080808; --bs-btn-disabled-bg: #222;
+  --bs-btn-focus-shadow-rgb: 54, 54, 54;
+}
+
+/* Bootstrap 2 default (white) button */
+.suit :is(.btn-default, .btn:not([class*="btn-"])) {
+  --bs-btn-color: #333;
+  --bs-btn-bg: #f5f5f5;
+  --bs-btn-border-color: #ccc;
+  --bs-btn-hover-color: #333;
+  --bs-btn-hover-bg: #e6e6e6;
+  --bs-btn-hover-border-color: #b3b3b3;
+  --bs-btn-active-color: #333;
+  --bs-btn-active-bg: #ccc;
+  --bs-btn-active-border-color: #b3b3b3;
+  --bs-btn-focus-shadow-rgb: 204, 204, 204;
+  background-image: linear-gradient(#fff, #e6e6e6);
+  border-bottom-color: #b3b3b3;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, .75);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.suit :is(.btn-default, .btn:not([class*="btn-"])):is(:hover, :active, .active) {
+  background-image: none;
+}
+
+/* Bootstrap 2 button sizes */
+.suit .btn-small {
+  --bs-btn-padding-y: 2px;
+  --bs-btn-padding-x: 10px;
+  --bs-btn-font-size: .85rem;
+  --bs-btn-border-radius: 3px;
+}
+
+.suit .btn-mini {
+  --bs-btn-padding-y: 0;
+  --bs-btn-padding-x: 6px;
+  --bs-btn-font-size: .75rem;
+  --bs-btn-border-radius: 3px;
+}
+
+.suit .btn-large {
+  --bs-btn-padding-y: 11px;
+  --bs-btn-padding-x: 19px;
+  --bs-btn-font-size: 1.25rem;
+  --bs-btn-border-radius: 6px;
 }
 
 .suit .page-link {
@@ -883,8 +967,6 @@ p.errornote {
 /* Django admin submit rows of 3rd party templates */
 .submit-row input[type=submit]:not(.btn),
 .submit-row a.button,
-.object-tools:not(.inner-right-column .object-tools) a:not(.btn),
-.toolbar-content > ul a:not(.btn),
 input[type=submit].default:not(.btn),
 .button:not(.btn) {
   display: inline-block;
@@ -900,11 +982,31 @@ input[type=submit].default:not(.btn),
 }
 
 .submit-row input[type=submit]:not(.btn):hover,
-.object-tools:not(.inner-right-column .object-tools) a:not(.btn):hover,
-.toolbar-content > ul a:not(.btn):hover,
 .button:not(.btn):hover {
   background: var(--suit-accent-dark);
   color: #fff;
+}
+
+/* Tool links of 3rd party change lists (Import, Export ...) */
+.object-tools:not(.inner-right-column .object-tools) a:not(.btn),
+.toolbar-content > ul a:not(.btn) {
+  display: inline-block;
+  padding: .3rem .8rem;
+  border: 1px solid #ccc;
+  border-bottom-color: #b3b3b3;
+  border-radius: var(--suit-radius);
+  color: #333;
+  background: #f5f5f5 linear-gradient(#fff, #e6e6e6);
+  line-height: 1.5;
+  text-decoration: none;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, .75);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.object-tools:not(.inner-right-column .object-tools) a:not(.btn):hover,
+.toolbar-content > ul a:not(.btn):hover {
+  color: #333;
+  background: #e6e6e6;
 }
 
 .submit-row-bottom {
@@ -1381,6 +1483,14 @@ p.datetime {
 .suit-date > .datetimeshortcuts { order: 3; }
 .suit-date > .timezonewarning { order: 4; flex-basis: 100%; }
 
+.suit-date > .datetimeshortcuts ~ .datetimeshortcuts {
+  display: none !important;
+}
+
+.suit .suit-date > input {
+  flex-shrink: 0;
+}
+
 .suit-date:has(> .datetimeshortcuts) > .input-group-text {
   display: none;
 }
@@ -1615,14 +1725,9 @@ p.datetime {
   font-size: 1rem;
 }
 
-.inline-related.tabular .table > :not(caption) > * > * {
-  padding: .35rem .5rem;
-}
-
 .inline-related.tabular thead th {
   white-space: nowrap;
   font-weight: bold;
-  background: var(--suit-bg-light);
 }
 
 .inline-related.tabular td :is(input:not([type=checkbox]):not([type=radio]), select, textarea) {
@@ -1865,6 +1970,50 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   box-shadow: var(--suit-box-shadow);
 }
 
+/* Tables: no vertical borders, white inset highlight, #ddd row lines and
+   #f9f9f9 stripes, gradient header (Suit on Bootstrap 2) */
+.suit :is(#result_list, .inline-related.tabular .table, #change-history) {
+  --bs-table-striped-bg: #f9f9f9;
+  --bs-table-hover-bg: #f5f5f5;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+  border-radius: var(--suit-radius);
+}
+
+.suit :is(#result_list, .inline-related.tabular .table, #change-history) > :not(caption) > * {
+  border-width: 0;
+}
+
+.suit :is(#result_list, .inline-related.tabular .table, #change-history) > :not(caption) > * > * {
+  padding: 5px 10px 4px;
+  border-width: 1px 0 0;
+  border-style: solid;
+  border-color: #ddd;
+  vertical-align: top;
+  box-shadow: inset 1px 1px 0 #fff, inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
+}
+
+.suit :is(#result_list, .inline-related.tabular .table, #change-history) > thead > tr > th {
+  padding: 7px 10px 8px;
+  border-top: 0;
+  vertical-align: middle;
+  background: #e5e5e5 linear-gradient(#f3f3f3, #e5e5e5);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .3);
+}
+
+.suit :is(#result_list, .inline-related.tabular .table, #change-history) > thead > tr > th:first-child {
+  border-top-left-radius: var(--suit-radius);
+}
+
+.suit :is(#result_list, .inline-related.tabular .table, #change-history) > thead > tr > th:last-child {
+  border-top-right-radius: var(--suit-radius);
+}
+
+.suit :is(#result_list, .inline-related.tabular .table) > tbody > tr > td :is(input, select, textarea) {
+  vertical-align: top;
+}
+
 /* Results table */
 #result_list {
   margin-bottom: 0;
@@ -1878,8 +2027,6 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 
 #result_list thead th {
   position: relative;
-  vertical-align: middle;
-  background: var(--suit-bg-light);
 }
 
 #result_list tbody th {
@@ -1900,7 +2047,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 }
 
 #result_list thead th.sorted {
-  background: #eaf0f3;
+  background: #e5e5e5 linear-gradient(#ebf1f4, #dde5e9);
 }
 
 #result_list thead th .sortoptions {
@@ -2310,7 +2457,29 @@ body.login #content-main {
     padding-bottom: .6rem;
   }
 
-  .submit-row-bottom {
+  /* Tool links of 3rd party change lists (Import, Export ...) */
+.object-tools:not(.inner-right-column .object-tools) a:not(.btn),
+.toolbar-content > ul a:not(.btn) {
+  display: inline-block;
+  padding: .3rem .8rem;
+  border: 1px solid #ccc;
+  border-bottom-color: #b3b3b3;
+  border-radius: var(--suit-radius);
+  color: #333;
+  background: #f5f5f5 linear-gradient(#fff, #e6e6e6);
+  line-height: 1.5;
+  text-decoration: none;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, .75);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.object-tools:not(.inner-right-column .object-tools) a:not(.btn):hover,
+.toolbar-content > ul a:not(.btn):hover {
+  color: #333;
+  background: #e6e6e6;
+}
+
+.submit-row-bottom {
     margin-left: 0;
   }
 

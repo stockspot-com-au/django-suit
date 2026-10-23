@@ -28,7 +28,7 @@ Supported versions: Django 4.2, 5.2 (LTS), 6.0 and 6.1 on Python 3.10+. Older Dj
 
 Upgrade notes:
 
-* Custom admin templates that extend Suit's templates and use Bootstrap 2 markup (``row-fluid``, ``span*``, ``input-append``, ``btn-info``, ``control-group``/``controls`` with BS2 classes) need to be checked. Commonly used Bootstrap 2 helpers still work: ``hide``, ``pull-right``, ``muted``, ``text-error``, ``alert-error``, ``label label-*``, ``input-mini`` ... ``input-xxlarge`` and ``error``/``warning``/``success``/``info`` row classes returned by ``suit_row_attributes``.
+* Custom admin templates that extend Suit's templates and use Bootstrap 2 markup (``row-fluid``, ``span*``, ``input-append``, ``control-group``/``controls`` with BS2 classes) need to be checked. Commonly used Bootstrap 2 helpers still work and look the same: ``btn-primary``/``btn-info``/``btn-success``/``btn-warning``/``btn-danger``/``btn-inverse``, ``btn-small``/``btn-mini``/``btn-large``, ``hide``, ``pull-right``, ``muted``, ``text-error``, ``alert-error``, ``label label-*``, ``input-mini`` ... ``input-xxlarge`` and ``error``/``warning``/``success``/``info`` row classes returned by ``suit_row_attributes``.
 * Third-party JavaScript using Bootstrap 2 plugins (``$(...).modal()``, ``data-toggle``) must use Bootstrap 5 (``bootstrap.Modal``, ``data-bs-toggle``).
 * Fieldset rows keep the ``form-row control-group``, ``control-label`` and ``controls`` classes, and the ``suit-tab``/``suit-tab-<name>`` and ``suit_form_includes`` APIs are unchanged.
 

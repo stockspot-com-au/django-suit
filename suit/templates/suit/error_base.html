@@ -18,10 +18,10 @@
   </div>
 
   <div class="suit-error-actions">
-    <a href="javascript:window.close()" class="btn btn-primary btn-lg d-none" data-suit-error="close">{% translate 'Close window' %}</a>
-    <a href="javascript:history.back()" class="btn btn-primary btn-lg d-none" data-suit-error="back">{% translate 'Go back' %}</a>
+    <a href="javascript:window.close()" class="btn btn-info btn-lg d-none" data-suit-error="close">{% translate 'Close window' %}</a>
+    <a href="javascript:history.back()" class="btn btn-info btn-lg d-none" data-suit-error="back">{% translate 'Go back' %}</a>
     {% if request and user.is_authenticated and user.is_staff %}
-      <a href="{% url 'admin:index' %}" class="btn btn-outline-secondary btn-lg">{% translate 'Go to admin home' %}</a>
+      <a href="{% url 'admin:index' %}" class="btn btn-default btn-lg">{% translate 'Go to admin home' %}</a>
     {% endif %}
   </div>
 </div>

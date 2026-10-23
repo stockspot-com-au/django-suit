@@ -1,13 +1,13 @@
 {% load i18n admin_urls %}
 <div class="submit-row">
 {% block submit-row %}
-  {% if show_save %}<button type="submit" class="btn btn-primary btn-high default" name="_save">{% translate 'Save' %}</button>{% endif %}
-  {% if show_save_and_continue %}<button type="submit" name="_continue" class="btn btn-outline-secondary btn-high">{% if can_change %}{% translate 'Save and continue editing' %}{% else %}{% translate 'Save and view' %}{% endif %}</button>{% endif %}
-  {% if show_save_as_new %}<button type="submit" name="_saveasnew" class="btn btn-outline-secondary">{% translate 'Save as new' %}</button>{% endif %}
-  {% if show_save_and_add_another %}<button type="submit" name="_addanother" class="btn btn-outline-secondary">{% translate 'Save and add another' %}</button>{% endif %}
+  {% if show_save %}<button type="submit" class="btn btn-info btn-high default" name="_save">{% translate 'Save' %}</button>{% endif %}
+  {% if show_save_and_continue %}<button type="submit" name="_continue" class="btn btn-default btn-high">{% if can_change %}{% translate 'Save and continue editing' %}{% else %}{% translate 'Save and view' %}{% endif %}</button>{% endif %}
+  {% if show_save_as_new %}<button type="submit" name="_saveasnew" class="btn btn-default">{% translate 'Save as new' %}</button>{% endif %}
+  {% if show_save_and_add_another %}<button type="submit" name="_addanother" class="btn btn-default">{% translate 'Save and add another' %}</button>{% endif %}
   {% if show_close %}
     {% url opts|admin_urlname:'changelist' as changelist_url %}
-    <a href="{% add_preserved_filters changelist_url %}" class="btn btn-outline-secondary closelink">{% translate 'Close' %}</a>
+    <a href="{% add_preserved_filters changelist_url %}" class="btn btn-default closelink">{% translate 'Close' %}</a>
   {% endif %}
   {% if show_delete_link and original %}
     {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
