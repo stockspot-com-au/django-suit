@@ -2144,6 +2144,16 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   margin: 0;
 }
 
+/* As in the original theme: no "Action:" label, and labels of extra action
+   form fields would show even while their field is hidden */
+#changelist .actions .action-label {
+  display: none;
+}
+
+#changelist .actions label:has(> :is(input, select, textarea)[style*="display: none"]) {
+  display: none;
+}
+
 #changelist .actions select {
   padding-top: .15rem;
   padding-bottom: .15rem;
