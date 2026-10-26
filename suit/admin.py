@@ -1,5 +1,4 @@
 import copy
-from django.conf import settings
 from django.contrib.admin import ModelAdmin
 from django.contrib.admin.views.main import ChangeList
 from django.forms import ModelForm
@@ -27,7 +26,7 @@ class SortableListForm(ModelForm):
     class Meta:
         widgets = {
             'order': NumberInput(
-                attrs={'class': 'hide input-mini suit-sortable'})
+                attrs={'class': 'd-none suit-sortable'})
         }
 
 
@@ -183,18 +182,4 @@ class SortableModelAdmin(SortableModelAdminBase, ModelAdmin):
                 next_order = 1
             setattr(obj, self.sortable, next_order)
         super(SortableModelAdmin, self).save_model(request, obj, form, change)
-
-
-# Quite aggressive detection and intrusion into Django CMS
-# Didn't found any other solutions though
-if 'cms' in settings.INSTALLED_APPS:
-    try:
-        from cms.admin.forms import PageForm
-
-        PageForm.Meta.widgets = {
-            'publication_date': SuitSplitDateTimeWidget,
-            'publication_end_date': SuitSplitDateTimeWidget,
-        }
-    except ImportError:
-        pass
 

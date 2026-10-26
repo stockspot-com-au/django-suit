@@ -1,0 +1,13 @@
+{# Renders a single bound form field as a Suit form row. Usage: {% include 'suit/includes/field_row.html' with field=form.x %} #}
+<div class="form-row control-group{% if field.errors %} errors{% endif %}{% if field.is_hidden %} hidden{% endif %} field-{{ field.name }}">
+  <div class="control-label{% if field.errors %} text-danger{% endif %}">{{ field.label_tag }}</div>
+  <div class="controls">
+    <div class="field-box{% if field.errors %} errors{% endif %}">
+      <div class="field-controls">{{ field }}</div>
+      {{ field.errors }}
+      {% if field.help_text %}
+        <div class="help form-text"{% if field.id_for_label %} id="{{ field.id_for_label }}_helptext"{% endif %}>{{ field.help_text|safe }}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>

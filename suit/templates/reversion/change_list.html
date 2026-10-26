@@ -2,10 +2,12 @@
 {% load i18n admin_urls %}
 
 {% block object-tools-items %}
-{% if not is_popup %}
-<a href="{% url opts|admin_urlname:'recoverlist' %}" class="recoverlink btn">
-    <i class="icon-repeat"></i>&nbsp;
-    {% blocktrans with cl.opts.verbose_name_plural|escape as name %}Recover deleted {{ name }}{% endblocktrans %}</a>
-{% endif %}
-{{block.super}}
+  {% if not is_popup and has_add_permission and has_change_permission %}
+    <li>
+      <a href="{% url opts|admin_urlname:'recoverlist' %}" class="btn btn-default recoverlink">
+        <i class="bi bi-arrow-counterclockwise"></i>
+        {% blocktranslate with cl.opts.verbose_name_plural|escape as name %}Recover deleted {{ name }}{% endblocktranslate %}</a>
+    </li>
+  {% endif %}
+  {{ block.super }}
 {% endblock %}

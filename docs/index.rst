@@ -28,7 +28,7 @@ Resources
 * Github: https://github.com/darklow/django-suit
 * Demo app on Github: https://github.com/darklow/django-suit-examples
 * Changelog: `Changelog.rst <https://github.com/darklow/django-suit/blob/develop/CHANGELOG.rst>`_
-* Supports: Django 1.4-2.0. Python: 2.6-3.4 |master|
+* Supports: Django 4.2, 5.2 (LTS), 6.0 and 6.1. Python: 3.10+
 * `Supported apps`_
 
 

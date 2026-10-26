@@ -5,9 +5,11 @@ Installation
 ------------
 
 
-1. You can get stable version of Django Suit by using pip or easy_install::
+Requirements: Python 3.10+ and Django 4.2, 5.2 (LTS), 6.0 or 6.1.
 
-    pip install django-suit==0.2.28
+1. Install this fork with pip::
+
+    pip install https://github.com/mhindery/django-suit/archive/develop.zip
 
 2. You will need to add the ``'suit'`` application to the ``INSTALLED_APPS`` setting of your Django project ``settings.py`` file.::
 
@@ -17,17 +19,9 @@ Installation
         'django.contrib.admin',
     )
 
-  .. important:: ``'suit'`` must be added before ``'django.contrib.admin'`` and if you are using third-party apps with special admin support (like django-cms) you also need to add ``'suit'`` before ``'cms'``.
+  .. important:: ``'suit'`` must be added before ``'django.contrib.admin'`` and before any third-party app that ships its own admin templates.
 
-3. **For Django < 1.9:** You need to add ``'django.core.context_processors.request'`` to ``TEMPLATE_CONTEXT_PROCESSORS`` setting in your Django project ``settings.py`` file.::
-
-      from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-
-      TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-          'django.core.context_processors.request',
-      )
-
-  **For Django >= 1.9 or with new Django ``TEMPLATES`` setting:** Make sure you have ``django.template.context_processors.request`` in your ``TEMPLATES`` ``OPTIONS`` ``context_processors`` setting in your Django project ``settings.py`` file.::
+3. Make sure you have ``django.template.context_processors.request`` in your ``TEMPLATES`` ``OPTIONS`` ``context_processors`` setting in your Django project ``settings.py`` file.::
 
 
       TEMPLATES = [
@@ -67,11 +61,8 @@ Develop branch
   pip install https://github.com/darklow/django-suit/tarball/develop
 
 
-v2-dev branch
--------------
+Upgrading from 0.3.x
+--------------------
 
-`v2-dev branch <https://github.com/darklow/django-suit/issues/475>`_ is a complete rewrite using Bootstrap v4. It is still in development and this documentation doesn't match v2-dev. Read more about v2 `here <https://github.com/darklow/django-suit/issues/475>`_. To install latest v2 version use::
-
-  pip uninstall django-suit
-  pip install https://github.com/darklow/django-suit/tarball/v2
+0.4.0 moves the theme from Bootstrap 2 to Bootstrap 5 and drops support for Django < 4.2. See the 0.4.0 entry of the `changelog <https://github.com/mhindery/django-suit/blob/develop/CHANGELOG.rst>`_ for what to check in your own admin templates and CSS.
 

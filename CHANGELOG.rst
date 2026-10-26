@@ -4,6 +4,35 @@ Changelog
 Only important changes are mentioned below. See `commit log <https://github.com/darklow/django-suit/commits/develop>`_, `closed issues <https://github.com/darklow/django-suit/issues?direction=desc&sort=updated&state=closed>`_ and `closed pull
 requests <https://github.com/darklow/django-suit/pulls?q=sort%3Aupdated-desc+is%3Apr+is%3Aclosed>`_ for full changes.
 
+v0.4.0 (2026-10-23)
+-------------------
+
+Supported versions: Django 4.2, 5.2 (LTS), 6.0 and 6.1 on Python 3.10+. Older Django and Python versions are no longer supported.
+
+* [Feature] Bootstrap 2.3.1 replaced by Bootstrap 5.3.8. All templates rewritten for Bootstrap 5 and Django 5.2+ admin markup, keeping the Suit look (header, left menu, fieldset layout, sticky save box).
+* [Feature] Glyphicons replaced by Bootstrap Icons 1.13.2 (``bi bi-*`` classes). Legacy ``icon-*`` names (e.g. in ``MENU_ICONS``, ``EnclosedInput``) are mapped by ``suit/css/glyphicons-compat.css`` and keep working.
+* [Feature] Bundled jQuery 1.8.3 / 2.2.4 removed: Suit now loads the jQuery shipped with Django admin (3.7.1). ``Suit.$`` and the global ``$`` still work; ``suit_jquery`` block can still be overridden.
+* [Feature] ``suit.css`` is now plain CSS using CSS custom properties (``--suit-*``) for theming. LESS sources and ``watch_less.py`` removed.
+* [Feature] Basic responsive layout for tablets and phones.
+* [Feature] Django 5.x/6.x admin features: view-only "Close" button, usable password toggle for users, delete summary and "No, take me back", paginated history, change form actions (Django 6.1), CSP nonces on inline scripts (Django 6.0 CSP), ``source_model`` popups (Django 6.1).
+* [Fix] Fieldsets crashed on Django 5.1+ (``length_is`` filter was removed).
+* [Fix] Log out uses a POST form (GET logout was removed in Django 5.0).
+* [Fix] Inlines use Django's own ``inlines.js`` initialisation; ``Suit.after_inline`` callbacks run on the ``formset:added`` event.
+* [Fix] ``collapse`` fieldsets are rendered as ``<details>`` like Django admin (``collapse.js`` was removed in Django 5.1). Add the ``open`` class to start expanded.
+* [Fix] jQuery 3 incompatibilities in ``suit.js`` and ``sortables.js`` (``.selector``, ``.andSelf()``).
+* [Fix] ``linked_readonly_fields`` no longer nests links now that Django links read-only foreign keys itself.
+* [Fix] Suit date/time widgets now also render their add-on inside ``SuitSplitDateTimeWidget``.
+* [Removed] Template overrides and hooks for django-cms, django-filer and django-import-export. They targeted 2013-era releases of those apps and hid their current templates; these apps now render with their own templates, styled through Suit's support for Django admin markup. django-reversion and django-mptt templates are kept and ported.
+* [Feature] Django admin form markup of other apps (``fieldset.module.aligned``, ``.submit-row``, tool lists) is styled to match Suit.
+* [Removed] ``jquery.autosize`` plugin: ``AutosizedTextarea`` uses CSS ``field-sizing: content`` with a small fallback in ``suit.js``.
+
+Upgrade notes:
+
+* Custom admin templates that extend Suit's templates and use Bootstrap 2 markup (``row-fluid``, ``span*``, ``input-append``, ``control-group``/``controls`` with BS2 classes) need to be checked. Commonly used Bootstrap 2 helpers still work and look the same: ``btn-primary``/``btn-info``/``btn-success``/``btn-warning``/``btn-danger``/``btn-inverse``, ``btn-small``/``btn-mini``/``btn-large``, ``hide``, ``pull-right``, ``muted``, ``text-error``, ``alert-error``, ``label label-*``, ``input-mini`` ... ``input-xxlarge`` and ``error``/``warning``/``success``/``info`` row classes returned by ``suit_row_attributes``.
+* Third-party JavaScript using Bootstrap 2 plugins (``$(...).modal()``, ``data-toggle``) must use Bootstrap 5 (``bootstrap.Modal``, ``data-bs-toggle``).
+* Fieldset rows keep the ``form-row control-group``, ``control-label`` and ``controls`` classes, and the ``suit-tab``/``suit-tab-<name>`` and ``suit_form_includes`` APIs are unchanged.
+
+
 v.0.3.1 (2022-09-01)
 
 * [Fix] Django 4 compatibility fixes. Thanks to @jorenham for `#1 <https://github.com/mhindery/django-suit/pull/1>`_.

@@ -4,6 +4,8 @@ Project status
 
 This is a fork of the unmaintaned upstream `django-suit <https://github.com/darklow/django-suit>`_ project. The `develop` branch is compatible with the latest Django versions, other branches were left as-is on the moment of forking.
 
+Version 0.4 supports Django 4.2, 5.2 (LTS), 6.0 and 6.1 on Python 3.10+, and uses Bootstrap 5.3, Bootstrap Icons and the jQuery shipped with Django admin (3.7.1). See ``CHANGELOG.rst`` before upgrading from 0.3.
+
 Install this using pip and direct github, it is not published on pypi as separate package currently:
 
 ```
@@ -50,22 +52,12 @@ Contributing
 See `Contributing documentation <http://django-suit.readthedocs.org/en/develop/contributing.html>`_
 
 
-Build Status
-============
+Tests
+=====
 
-Django Suit uses Travis CI to perform tests on different Django and Python versions.
+Tests run on GitHub Actions for Django 4.2, 5.2, 6.0 and 6.1 (see ``.github/workflows/tests.yml``). To run them locally::
 
-Tested using Python: 2.5-3.4. Django: 1.4-1.10. Develop / Master:
-
-.. |develop| image:: https://travis-ci.org/darklow/django-suit.png?branch=develop
-   :alt: Build Status - develop branch
-   :target: http://travis-ci.org/darklow/django-suit
-
-.. |master| image:: https://travis-ci.org/darklow/django-suit.png?branch=master
-   :alt: Build Status - master branch
-   :target: http://travis-ci.org/darklow/django-suit
-
-|develop| |master|
+    python manage.py test suit.tests
 
 
 Preview
