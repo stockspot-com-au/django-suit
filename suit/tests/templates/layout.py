@@ -40,6 +40,21 @@ class LayoutTestCase(ModelsTestCaseMixin, UserTestCaseMixin):
             for path in re.findall(r'(?:href|src)="/static/([^"?]+)', content):
                 self.assertTrue(finders.find(path), '%s not found' % path)
 
+    def test_suit_assets_are_versioned(self):
+        """Old releases used the same paths, the version busts browser caches"""
+        from suit import VERSION
+        self.get_response(reverse('admin:%s_book_add' % app_label))
+        for path in ('suit/bootstrap5/css/bootstrap.min.css', 'suit/css/suit.css',
+                     'suit/js/suit.js', 'suit/bootstrap5/js/bootstrap.bundle.min.js'):
+            self.assertContains(self.response, '/static/%s?v=%s' % (path, VERSION))
+
+    def test_sortable_media_is_versioned(self):
+        from suit import VERSION
+        from suit.admin import SortableModelAdmin
+        media = str(SortableModelAdmin(Book, admin.site).media)
+        self.assertIn('suit/js/sortables.js?v=%s' % VERSION, media)
+        self.assertEqual(media.count('sortables.js'), 1)
+
     def test_fieldset_classes_filter(self):
         self.assertEqual(suit_fieldset_classes('wide collapse suit-tab'),
                          'wide suit-tab')

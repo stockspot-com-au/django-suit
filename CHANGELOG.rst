@@ -14,6 +14,7 @@ Supported versions: Django 4.2, 5.2 (LTS), 6.0 and 6.1 on Python 3.10+. Older Dj
 * [Feature] Bundled jQuery 1.8.3 / 2.2.4 removed: Suit now loads the jQuery shipped with Django admin (3.7.1). ``Suit.$`` and the global ``$`` still work; ``suit_jquery`` block can still be overridden.
 * [Feature] ``suit.css`` is now plain CSS using CSS custom properties (``--suit-*``) for theming. LESS sources and ``watch_less.py`` removed.
 * [Feature] Basic responsive layout for tablets and phones.
+* [Feature] Suit's CSS/JS URLs carry ``?v=<version>`` and Bootstrap 5 lives in ``suit/static/suit/bootstrap5/``, so browsers don't keep using files cached from an older Suit release at the same path (projects without hashed static file names).
 * [Feature] Django 5.x/6.x admin features: view-only "Close" button, usable password toggle for users, delete summary and "No, take me back", paginated history, change form actions (Django 6.1), CSP nonces on inline scripts (Django 6.0 CSP), ``source_model`` popups (Django 6.1).
 * [Fix] Fieldsets crashed on Django 5.1+ (``length_is`` filter was removed).
 * [Fix] Log out uses a POST form (GET logout was removed in Django 5.0).

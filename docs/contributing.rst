@@ -21,7 +21,7 @@ When contributing don't forget to test your code by running::
 CSS
 ---
 
-``suit/static/suit/css/suit.css`` is plain CSS on top of Bootstrap 5, edit it directly. Bootstrap and Bootstrap Icons are vendored, unmodified apart from the removed source map comments, in ``suit/static/suit/bootstrap`` and ``suit/static/suit/bootstrap-icons``.
+``suit/static/suit/css/suit.css`` is plain CSS on top of Bootstrap 5, edit it directly. Bootstrap and Bootstrap Icons are vendored, unmodified apart from the removed source map comments, in ``suit/static/suit/bootstrap5`` and ``suit/static/suit/bootstrap-icons``.
 
 
 Related packages

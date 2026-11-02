@@ -1,11 +1,11 @@
-{% load static i18n %}<!DOCTYPE html>
+{% load static i18n suit_tags %}<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block headtitle %}{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'suit/bootstrap/css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'suit/css/suit.css' %}">
+  <link rel="stylesheet" href="{% suit_static 'suit/bootstrap5/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% suit_static 'suit/css/suit.css' %}">
 </head>
 <body class="suit suit-error-page">
 

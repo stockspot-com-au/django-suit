@@ -7,17 +7,17 @@
   <title>{% block title %}{{ title }} | {{ 'ADMIN_NAME'|suit_conf }}{% endblock %}</title>
   {% block before_suit_styles %}{% endblock %}
   {% block stylesheet %}{% endblock %}
-  <link rel="stylesheet" href="{% if LANGUAGE_BIDI %}{% static 'suit/bootstrap/css/bootstrap.rtl.min.css' %}{% else %}{% static 'suit/bootstrap/css/bootstrap.min.css' %}{% endif %}">
-  <link rel="stylesheet" href="{% static 'suit/bootstrap-icons/bootstrap-icons.min.css' %}">
-  <link rel="stylesheet" href="{% static 'suit/css/glyphicons-compat.css' %}">
+  <link rel="stylesheet" href="{% if LANGUAGE_BIDI %}{% suit_static 'suit/bootstrap5/css/bootstrap.rtl.min.css' %}{% else %}{% suit_static 'suit/bootstrap5/css/bootstrap.min.css' %}{% endif %}">
+  <link rel="stylesheet" href="{% suit_static 'suit/bootstrap-icons/bootstrap-icons.min.css' %}">
+  <link rel="stylesheet" href="{% suit_static 'suit/css/glyphicons-compat.css' %}">
   <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}">
-  <link rel="stylesheet" href="{% static 'suit/css/suit.css' %}">
+  <link rel="stylesheet" href="{% suit_static 'suit/css/suit.css' %}">
   {% block extrastyle %}{% endblock %}
   {% if LANGUAGE_BIDI %}{% block stylesheet_rtl %}{% endblock %}{% endif %}
   <script{% if csp_nonce %} nonce="{{ csp_nonce }}"{% endif %}>window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
   {% block suit_jquery %}<script src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}"></script>{% endblock %}
   <script{% if csp_nonce %} nonce="{{ csp_nonce }}"{% endif %}>var Suit = { $: $.noConflict() }; if (!window.$) { window.$ = Suit.$; }</script>
-  <script src="{% static 'suit/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% suit_static 'suit/bootstrap5/js/bootstrap.bundle.min.js' %}"></script>
   {% if 'SHOW_REQUIRED_ASTERISK'|suit_conf %}
   <style{% if csp_nonce %} nonce="{{ csp_nonce }}"{% endif %}>.required:after { content: '*'; margin: 0 0 0 5px; position: absolute; color: #ccc;}</style>
   {% endif %}
@@ -217,7 +217,7 @@
   {% endif %}
 {% endblock %}
 
-  <script src="{% static 'suit/js/suit.js' %}"></script>
+  <script src="{% suit_static 'suit/js/suit.js' %}"></script>
   {% block extrajs %}{% endblock %}
 
 </body>

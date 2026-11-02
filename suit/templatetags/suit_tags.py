@@ -4,11 +4,12 @@ from django.contrib.admin.utils import lookup_field
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import ForeignKey
 from django.template.defaulttags import NowNode
+from django.templatetags.static import static
 from django.urls import NoReverseMatch, reverse
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from suit.config import get_config
-from suit import utils
+from suit import VERSION, utils
 
 django_version = utils.django_major_version()
 
@@ -19,6 +20,21 @@ register = template.Library()
 def suit_conf(name):
     value = get_config(name)
     return mark_safe(value) if isinstance(value, str) else value
+
+
+@register.simple_tag
+def suit_static(path):
+    """
+    URL of a Suit static file with the Suit version appended, so browsers
+    don't keep using a file cached from an older Suit release at the same
+    path (projects without hashed static file names).
+    """
+    return versioned_static(path)
+
+
+def versioned_static(path):
+    url = static(path)
+    return '%s%sv=%s' % (url, '&' if '?' in url else '?', VERSION)
 
 
 @register.tag

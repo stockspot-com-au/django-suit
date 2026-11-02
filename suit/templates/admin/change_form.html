@@ -14,7 +14,7 @@
 
   {% if 'CONFIRM_UNSAVED_CHANGES'|suit_conf %}
     <!-- Warn on leaving unsaved form -->
-    <script src="{% static 'suit/js/suit-form-confirm.js' %}"></script>
+    <script src="{% suit_static 'suit/js/suit-form-confirm.js' %}"></script>
     <script{% if csp_nonce %} nonce="{{ csp_nonce }}"{% endif %}>
       confirmExitIfModified('{{ opts.model_name }}_form', '{% filter escapejs %}{% translate 'You have unsaved changes' %}.{% endfilter %}');
     </script>
