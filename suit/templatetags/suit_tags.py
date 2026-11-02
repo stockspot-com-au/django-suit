@@ -1,4 +1,5 @@
 import itertools
+import json
 from django import template
 from django.contrib.admin.utils import lookup_field
 from django.core.exceptions import ObjectDoesNotExist
@@ -8,6 +9,7 @@ from django.templatetags.static import static
 from django.urls import NoReverseMatch, reverse
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext
 from suit.config import get_config
 from suit import VERSION, utils
 
@@ -139,6 +141,18 @@ def suit_collapsible(fieldset):
 @register.filter
 def suit_has_class(classes, name):
     return name in str(classes or '').split()
+
+
+@register.filter
+def suit_inline_formset_data(inline_admin_formset):
+    """
+    inline_formset_data with the original Suit's title cased
+    "Add another Verbose Name" link text.
+    """
+    data = json.loads(inline_admin_formset.inline_formset_data())
+    data['options']['addText'] = gettext('Add another %(verbose_name)s') % {
+        'verbose_name': str(inline_admin_formset.opts.verbose_name).title()}
+    return json.dumps(data)
 
 
 @register.filter

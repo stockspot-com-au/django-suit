@@ -19,7 +19,7 @@ Supported versions: Django 4.2, 5.2 (LTS), 6.0 and 6.1 on Python 3.10+. Older Dj
 * [Fix] Fieldsets crashed on Django 5.1+ (``length_is`` filter was removed).
 * [Fix] Log out uses a POST form (GET logout was removed in Django 5.0).
 * [Fix] Inlines use Django's own ``inlines.js`` initialisation; ``Suit.after_inline`` callbacks run on the ``formset:added`` event.
-* [Fix] ``collapse`` fieldsets are rendered as ``<details>`` like Django admin (``collapse.js`` was removed in Django 5.1). Add the ``open`` class to start expanded.
+* [Fix] ``collapse`` fieldsets are rendered as ``<details>`` like Django admin (``collapse.js`` was removed in Django 5.1). Add the ``open`` class to start expanded. Inlines stay expanded and ignore ``collapse``, as in previous Suit releases.
 * [Fix] jQuery 3 incompatibilities in ``suit.js`` and ``sortables.js`` (``.selector``, ``.andSelf()``).
 * [Fix] ``linked_readonly_fields`` no longer nests links now that Django links read-only foreign keys itself.
 * [Fix] Suit date/time widgets now also render their add-on inside ``SuitSplitDateTimeWidget``.
@@ -30,6 +30,7 @@ Supported versions: Django 4.2, 5.2 (LTS), 6.0 and 6.1 on Python 3.10+. Older Dj
 Upgrade notes:
 
 * Custom admin templates that extend Suit's templates and use Bootstrap 2 markup (``row-fluid``, ``span*``, ``input-append``, ``control-group``/``controls`` with BS2 classes) need to be checked. Commonly used Bootstrap 2 helpers still work and look the same: ``btn-primary``/``btn-info``/``btn-success``/``btn-warning``/``btn-danger``/``btn-inverse``, ``btn-small``/``btn-mini``/``btn-large``, ``hide``, ``pull-right``, ``muted``, ``text-error``, ``alert-error``, ``label label-*``, ``input-mini`` ... ``input-xxlarge`` and ``error``/``warning``/``success``/``info`` row classes returned by ``suit_row_attributes``.
+* Bootstrap 5 utility classes (``mt-4``, ``px-2``, ``mb-2`` ...) use ``!important``. App CSS that defines its own classes with these names needs ``!important`` (or other names) to keep winning.
 * Third-party JavaScript using Bootstrap 2 plugins (``$(...).modal()``, ``data-toggle``) must use Bootstrap 5 (``bootstrap.Modal``, ``data-bs-toggle``).
 * Fieldset rows keep the ``form-row control-group``, ``control-label`` and ``controls`` classes, and the ``suit-tab``/``suit-tab-<name>`` and ``suit_form_includes`` APIs are unchanged.
 

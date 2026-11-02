@@ -5,7 +5,7 @@ from django.contrib.staticfiles import finders
 from django.test import override_settings
 from django.urls import reverse
 from suit.templatetags.suit_tags import suit_collapsible, \
-    suit_fieldset_classes, suit_line_visible
+    suit_fieldset_classes, suit_inline_formset_data, suit_line_visible
 from suit.tests.mixins import ModelsTestCaseMixin, UserTestCaseMixin
 from suit.tests.models import Book, test_app_label
 
@@ -122,6 +122,25 @@ class LayoutTestCase(ModelsTestCaseMixin, UserTestCaseMixin):
 
         self.assertTrue(suit_line_visible(FakeLine(['name', 'hidden'])))
         self.assertFalse(suit_line_visible(FakeLine(['hidden'])))
+
+    def test_inline_add_text_is_title_cased(self):
+        """Like the original Suit: "Add another Risk Answer" """
+        import json
+
+        class FakeOpts:
+            verbose_name = 'risk answer'
+
+        class FakeInlineFormset:
+            opts = FakeOpts()
+
+            def inline_formset_data(self):
+                return json.dumps({'name': '#risk', 'options': {
+                    'prefix': 'risk', 'addText': 'Add another Risk answer',
+                    'deleteText': 'Remove'}})
+
+        data = json.loads(suit_inline_formset_data(FakeInlineFormset()))
+        self.assertEqual(data['options']['addText'], 'Add another Risk Answer')
+        self.assertEqual(data['options']['deleteText'], 'Remove')
 
     def test_fields_rendered_visible(self):
         self.get_response(reverse('admin:%s_book_add' % app_label))

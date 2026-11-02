@@ -22,17 +22,8 @@
 
         <div class="{% if line.fields|length == 1 %}field-box{% else %}multi-field-box{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}{% if field.is_checkbox %} checkbox-row{% endif %}">
           {% if not forloop.first %}{{ field.label_tag }}{% endif %}
-          <div class="field-controls">
-            {% if field.is_readonly %}
-              <div class="readonly">{{ field|field_contents_foreign_linked }}</div>
-            {% else %}
-              {{ field.field }}
-            {% endif %}
-            {# Help next to a single field, below it when there are errors or several fields #}
-            {% if field.field.help_text and line.fields|length == 1 and not field.errors %}
-              <div class="help form-text help-inline{% if field.field.is_hidden %} hidden{% endif %}"{% if field.field.id_for_label %} id="{{ field.field.id_for_label }}_helptext"{% endif %}>{{ field.field.help_text|safe }}</div>
-            {% endif %}
-          </div>
+          {# No whitespace between the field and its help: spacing comes from CSS, like the original Suit #}
+          <div class="field-controls">{% if field.is_readonly %}<div class="readonly">{{ field|field_contents_foreign_linked }}</div>{% else %}{{ field.field }}{% endif %}{% if field.field.help_text and line.fields|length == 1 and not field.errors %}<div class="help form-text help-inline{% if field.field.is_hidden %} hidden{% endif %}"{% if field.field.id_for_label %} id="{{ field.field.id_for_label }}_helptext"{% endif %}>{{ field.field.help_text|safe }}</div>{% endif %}</div>
           {% if not field.is_readonly and field.errors %}{{ field.errors }}{% endif %}
           {% if field.field.help_text %}{% if line.fields|length == 1 and not field.errors %}{% else %}
             <div class="help form-text help-block{% if field.field.is_hidden %} hidden{% endif %}"{% if field.field.id_for_label %} id="{{ field.field.id_for_label }}_helptext"{% endif %}>{{ field.field.help_text|safe }}</div>

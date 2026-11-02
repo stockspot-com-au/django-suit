@@ -76,7 +76,7 @@ CSS goodies
 
   |collapse|
 
-* ``collapse`` fieldsets are rendered as a ``<details>`` element (same as Django admin). Add the ``open`` class too (``'classes': ('collapse', 'open')``) to start expanded. Fieldsets with errors are never collapsed.
+* ``collapse`` fieldsets are rendered as a ``<details>`` element (same as Django admin). Add the ``open`` class too (``'classes': ('collapse', 'open')``) to start expanded. Fieldsets with errors are never collapsed. Inline ``classes`` don't collapse the inline, as in previous Suit releases.
 
 * ``wide`` CSS class makes fieldset labels wider
 

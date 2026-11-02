@@ -240,6 +240,10 @@ html {
   --bs-nav-link-hover-color: var(--suit-link-hover);
 }
 
+.suit .nav-tabs .nav-link {
+  transition: none;
+}
+
 a.btn, .btn {
   text-decoration: none;
 }
@@ -353,10 +357,9 @@ a.btn, .btn {
 /* ==========================================================================
    Page layout
    ========================================================================== */
+/* body stays a block: jQuery .show() reads an element's default display from a
+   copy appended to body, which a flex body would turn into "block" */
 body.suit {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   min-width: 960px;
   background-color: var(--suit-bg);
 }
@@ -365,10 +368,15 @@ body.suit.popup {
   min-width: 0;
 }
 
+/* Sticky footer: the page is at least the viewport height with the 60px footer */
 #wrap {
-  flex: 1 0 auto;
+  min-height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
+}
+
+.popup #wrap {
+  min-height: 100vh;
 }
 
 #container {
@@ -392,6 +400,15 @@ body.suit.popup {
 
 h1, h2, h3, h4, h5, h6 {
   text-shadow: var(--suit-white-shadow);
+}
+
+/* Bootstrap 2 list item and button line heights, not inherited from the 26px form rows */
+li {
+  line-height: 18px;
+}
+
+button {
+  line-height: 18px;
 }
 
 .italic-title {
@@ -567,7 +584,7 @@ a.icon:last-child {
   order: 2;
   flex: 1 1 auto;
   min-width: 0;
-  padding: var(--suit-padding) calc(var(--suit-padding) * 2) var(--suit-padding) var(--suit-padding);
+  padding: var(--suit-padding);
 }
 
 .popup #suit-center {
@@ -1008,8 +1025,7 @@ p.errornote {
 /* Django admin submit rows of 3rd party templates */
 .submit-row input[type=submit]:not(.btn),
 .submit-row a.button,
-input[type=submit].default:not(.btn),
-.button:not(.btn) {
+input[type=submit].default:not(.btn) {
   display: inline-block;
   padding: .3rem .8rem;
   border: 1px solid var(--suit-accent-dark);
@@ -1023,7 +1039,7 @@ input[type=submit].default:not(.btn),
 }
 
 .submit-row input[type=submit]:not(.btn):hover,
-.button:not(.btn):hover {
+.submit-row a.button:hover {
   background: var(--suit-accent-dark);
   color: #fff;
 }
@@ -1160,8 +1176,6 @@ input[type=submit].default:not(.btn),
 .suit .vForeignKeyRawIdAdminField { width: 104px; }
 .suit .vManyToManyRawIdAdminField { width: 220px; }
 .suit .vDateField, .suit .vTimeField { width: auto; }
-.suit select:not([multiple]) { min-width: 8rem; }
-.suit .controls select:not([multiple]) { min-width: 220px; }
 
 /* Bootstrap 2 input sizes, still used in widget attrs */
 .suit .input-mini { width: 60px; }
@@ -1422,23 +1436,21 @@ details.suit-collapse:not([open]) > summary > h2 {
   contain: inline-size;
 }
 
-.form-row .field-controls {
+/* Bootstrap 2 inline flow, so app CSS can still move help-inline below the field with display: block */
+.form-row .field-controls > :is(input, select, textarea) {
+  vertical-align: middle;
+}
+
+/* Django 6.1+ inserts the timezone warning before the widget: reorder it */
+.form-row .field-controls:has(> .timezonewarning) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0 5px;
-  min-height: 28px;
 }
 
-/* Help text next to the field (Bootstrap 2 help-inline) or below it */
-.form-row .field-box > .field-controls > :is(.datetime, p.datetime),
 .form-row .field-controls > .readonly:has(iframe) {
-  flex-basis: 100%;
-}
-
-.form-row .field-controls > .help-inline {
-  margin: 0;
-  padding-left: 5px;
+  display: block;
 }
 
 .form-row .help-block {
@@ -1446,6 +1458,8 @@ details.suit-collapse:not([open]) > summary > h2 {
 }
 
 .form-row .readonly {
+  display: inline-block;
+  vertical-align: middle;
   margin-right: 5px;
   line-height: 26px;
 }
@@ -1455,11 +1469,19 @@ details.suit-collapse:not([open]) > summary > h2 {
 }
 
 /* Help and errors */
-.help, .help-block, .help-inline, .form-row .form-text {
+.help, .help-block, .help-inline, :where(.form-row) .form-text {
   margin-top: .2rem;
   font-size: .9167rem;
   line-height: normal;
   color: var(--suit-grey);
+}
+
+/* Help next to the field (Bootstrap 2 help-inline); low specificity like Bootstrap 2 */
+.help-inline {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding-left: 5px;
 }
 
 .help ul {
@@ -2056,7 +2078,7 @@ p.datetime {
 }
 
 .inline-related.tabular .help-tooltip {
-  color: var(--suit-grey);
+  margin: 0;
   cursor: help;
 }
 
@@ -2072,6 +2094,15 @@ p.datetime {
   border: 1px solid #ddd;
   border-top: 0;
   border-radius: 0 0 var(--suit-radius) var(--suit-radius);
+}
+
+/* Bootstrap 2: links in table cells are underlined on hover only */
+.table :is(th, td) a {
+  text-decoration: none;
+}
+
+.table :is(th, td) a:hover {
+  text-decoration: underline;
 }
 
 .inline-group .add-row a, .inline-group a.addlink {
@@ -2565,7 +2596,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 .actionlist {
   margin: 0;
   padding: 0;
-  min-width: 14rem;
+  min-width: 200px;
   list-style: none;
   background: #fff;
   border-radius: var(--suit-radius);
@@ -2573,12 +2604,14 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 }
 
 .actionlist li {
-  display: block;
-  padding: 5px 10px 5px 32px;
-  position: relative;
-  font-size: .9167rem;
-  border-bottom: 1px solid #f3f3f3;
+  padding: 3px 10px;
+  font-size: 11px;
+  border-bottom: 1px solid #f5f5f5;
   overflow-wrap: anywhere;
+}
+
+.actionlist li:first-child {
+  padding-top: 5px;
 }
 
 .actionlist li:nth-child(2n) {
@@ -2586,18 +2619,19 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 }
 
 .actionlist li:last-child {
+  padding-bottom: 5px;
   border-bottom: 0;
 }
 
 .actionlist li > .bi {
-  position: absolute;
-  left: 11px;
-  top: 6px;
-  opacity: .6;
+  float: left;
+  margin-right: 10px;
+  color: #333;
+  opacity: .5;
 }
 
 .actionlist li.deletelink .object-repr {
-  text-decoration: line-through;
+  color: #999 !important;
 }
 
 /* ==========================================================================

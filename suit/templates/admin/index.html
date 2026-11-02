@@ -62,18 +62,22 @@
       {% else %}
         <ul class="actionlist">
           {% for entry in admin_log %}
-            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink text-danger{% endif %}">
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink text-error{% endif %}">
               <i class="bi {% if entry.is_addition %}bi-plus-lg{% endif %}{% if entry.is_change %}bi-pencil-fill{% endif %}{% if entry.is_deletion %}bi-trash-fill{% endif %}"></i>
+              {% spaceless %}
+                {% if entry.is_addition %}{% translate 'added'|capfirst %}{% endif %}
+                {% if entry.is_change %}{% translate 'changed'|capfirst %}{% endif %}
+                {% if entry.is_deletion %}{% translate 'deleted'|capfirst %}{% endif %}
+                {% if entry.content_type %}
+                  <span class="content-type">{{ entry.content_type.name }}</span>
+                {% else %}
+                  <span class="content-type">{% translate 'Unknown content' %}</span>
+                {% endif %}
+              {% endspaceless %}&nbsp;
               {% if entry.is_deletion or not entry.get_admin_url %}
-                <span class="object-repr">{{ entry.object_repr }}</span>
+                <span class="object-repr color-grey">{{ entry.object_repr }}</span>
               {% else %}
                 <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
-              {% endif %}
-              <br>
-              {% if entry.content_type %}
-                <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
-              {% else %}
-                <span class="mini quiet">{% translate 'Unknown content' %}</span>
               {% endif %}
             </li>
           {% endfor %}
