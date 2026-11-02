@@ -2701,6 +2701,14 @@ body.login #content-main {
   position: static;
 }
 
+/* Wide tables make the page scroll horizontally, as in the original theme;
+   on small screens they scroll inside their own box */
+@media (min-width: 992px) {
+  .suit .table-responsive {
+    overflow-x: visible;
+  }
+}
+
 @media (max-width: 991.98px) {
   body.suit {
     min-width: 0;
