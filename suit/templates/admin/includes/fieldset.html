@@ -28,11 +28,15 @@
             {% else %}
               {{ field.field }}
             {% endif %}
+            {# Help next to a single field, below it when there are errors or several fields #}
+            {% if field.field.help_text and line.fields|length == 1 and not field.errors %}
+              <div class="help form-text help-inline{% if field.field.is_hidden %} hidden{% endif %}"{% if field.field.id_for_label %} id="{{ field.field.id_for_label }}_helptext"{% endif %}>{{ field.field.help_text|safe }}</div>
+            {% endif %}
           </div>
           {% if not field.is_readonly and field.errors %}{{ field.errors }}{% endif %}
-          {% if field.field.help_text %}
-            <div class="help form-text{% if field.field.is_hidden %} hidden{% endif %}"{% if field.field.id_for_label %} id="{{ field.field.id_for_label }}_helptext"{% endif %}>{{ field.field.help_text|safe }}</div>
-          {% endif %}
+          {% if field.field.help_text %}{% if line.fields|length == 1 and not field.errors %}{% else %}
+            <div class="help form-text help-block{% if field.field.is_hidden %} hidden{% endif %}"{% if field.field.id_for_label %} id="{{ field.field.id_for_label }}_helptext"{% endif %}>{{ field.field.help_text|safe }}</div>
+          {% endif %}{% endif %}
         </div>
 
         {% if forloop.last %}

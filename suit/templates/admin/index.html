@@ -23,9 +23,9 @@
                 {% if model.admin_url %}
                   <td>
                     {% if model.view_only %}
-                      <a href="{{ model.admin_url }}" class="viewlink icon"><i class="bi bi-eye"></i>{% translate 'View' %}</a>
+                      <a href="{{ model.admin_url }}" class="viewlink icon">{% translate 'View' %}</a>
                     {% else %}
-                      <a href="{{ model.admin_url }}" class="changelink icon"><i class="bi bi-pencil"></i>{% translate 'Change' %}</a>
+                      <a href="{{ model.admin_url }}" class="changelink icon">{% translate 'Change' %}</a>
                     {% endif %}
                   </td>
                 {% else %}
@@ -33,7 +33,7 @@
                 {% endif %}
 
                 {% if model.add_url %}
-                  <td><a href="{{ model.add_url }}" class="addlink icon"><i class="bi bi-plus-circle"></i>{% translate 'Add' %}</a></td>
+                  <td><a href="{{ model.add_url }}" class="addlink icon"><i class="bi bi-plus-circle-fill"></i>{% translate 'Add' %}</a></td>
                 {% else %}
                   <td>&nbsp;</td>
                 {% endif %}
@@ -63,7 +63,7 @@
         <ul class="actionlist">
           {% for entry in admin_log %}
             <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink text-danger{% endif %}">
-              <i class="bi {% if entry.is_addition %}bi-plus-lg{% endif %}{% if entry.is_change %}bi-pencil{% endif %}{% if entry.is_deletion %}bi-trash{% endif %}"></i>
+              <i class="bi {% if entry.is_addition %}bi-plus-lg{% endif %}{% if entry.is_change %}bi-pencil-fill{% endif %}{% if entry.is_deletion %}bi-trash-fill{% endif %}"></i>
               {% if entry.is_deletion or not entry.get_admin_url %}
                 <span class="object-repr">{{ entry.object_repr }}</span>
               {% else %}

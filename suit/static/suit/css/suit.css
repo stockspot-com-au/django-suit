@@ -32,7 +32,7 @@
   --suit-header-height: 45px;
   --suit-header-link: #92d1ee;
   --suit-left-width: 200px;
-  --suit-right-width: 190px;
+  --suit-right-width: 180px;
   --suit-label-width: 180px;
   --suit-padding: 20px;
   --suit-radius: 4px;
@@ -56,6 +56,8 @@
   --bs-link-hover-color: var(--suit-link-hover);
   --bs-link-hover-color-rgb: 0, 85, 128;
   --bs-secondary-color: #999;
+  --bs-danger: #b94a48;
+  --bs-danger-rgb: 185, 74, 72;
   --bs-border-color: #ccc;
   --bs-border-radius: var(--suit-radius);
 
@@ -189,21 +191,21 @@ html {
 }
 
 /* Bootstrap 2 button sizes */
-.suit .btn-small {
+.suit .btn.btn-small {
   --bs-btn-padding-y: 2px;
   --bs-btn-padding-x: 10px;
   --bs-btn-font-size: .85rem;
   --bs-btn-border-radius: 3px;
 }
 
-.suit .btn-mini {
+.suit .btn.btn-mini {
   --bs-btn-padding-y: 0;
   --bs-btn-padding-x: 6px;
   --bs-btn-font-size: .75rem;
   --bs-btn-border-radius: 3px;
 }
 
-.suit .btn-large {
+.suit .btn.btn-large {
   --bs-btn-padding-y: 11px;
   --bs-btn-padding-x: 19px;
   --bs-btn-font-size: 1.25rem;
@@ -217,8 +219,8 @@ html {
   --bs-pagination-color: var(--suit-link);
   --bs-pagination-border-color: #ddd;
   --bs-pagination-hover-bg: #f5f5f5;
-  --bs-pagination-active-bg: #49afcd;
-  --bs-pagination-active-border-color: #2f96b4;
+  --bs-pagination-active-bg: #2f96b4;
+  --bs-pagination-active-border-color: #ccc;
   --bs-pagination-disabled-color: #999;
 }
 
@@ -395,7 +397,8 @@ h1, h2, h3, h4, h5, h6 {
 .italic-title {
   font-size: 1.4167rem;
   font-weight: normal;
-  margin: 0 0 .4rem .3rem;
+  line-height: 18px;
+  margin: 0 0 5px 5px;
 }
 
 /* Hide content-title from regular lists and forms */
@@ -412,6 +415,12 @@ h1, h2, h3, h4, h5, h6 {
 
 a.icon i, a.icon .bi {
   margin-right: 5px;
+}
+
+/* Icons are dark like the Glyphicons sprite, not link coloured */
+#suit-center a:not(.btn) > i.bi, .menu-box a > i.bi, .footer a > i.bi,
+.left-nav > ul > li:not(.active) > a > i {
+  color: var(--suit-text);
 }
 
 a.icon {
@@ -467,6 +476,7 @@ a.icon:last-child {
   color: #fff;
   font-size: 1.5rem;
   font-weight: bold;
+  line-height: 36px;
   margin: 0 15px 0 13px;
   padding: 0;
   text-shadow: 0 -1px #121414;
@@ -480,7 +490,7 @@ a.icon:last-child {
   display: flex;
   align-items: center;
   padding: 0 0 0 30px;
-  line-height: 1.25;
+  line-height: normal;
 }
 
 .header .header-content.header-content-first {
@@ -623,7 +633,7 @@ a.icon:last-child {
 .left-nav > ul > li > a {
   display: block;
   position: relative;
-  padding: 6px 10px 6px 13px;
+  padding: 5px 10px 5px 13px;
   border-bottom: 1px solid var(--suit-border-light);
   color: #666;
   text-decoration: none;
@@ -631,9 +641,15 @@ a.icon:last-child {
 
 .left-nav > ul > li > a i {
   display: inline-block;
-  width: 1.15em;
-  margin-right: 8px;
+  width: 14px;
+  margin-right: 10px;
   opacity: .8;
+}
+
+/* Bold chevron like the Glyphicons one of the original theme */
+.left-nav i.bi-chevron-right::before {
+  -webkit-text-stroke: 1.5px currentColor;
+  font-size: 11px;
 }
 
 .left-nav > ul > li:last-child > a {
@@ -675,7 +691,7 @@ a.icon:last-child {
 .left-nav > ul > li > ul {
   display: none;
   list-style: none;
-  margin: 0;
+  margin: -1px 0 0;
   padding: 7px 0;
   border-bottom: 1px solid var(--suit-border-light);
   background-color: var(--suit-bg-light);
@@ -688,7 +704,7 @@ a.icon:last-child {
 
 .left-nav > ul > li > ul > li > a {
   display: block;
-  padding: 3px 10px 4px 27px;
+  padding: 3px 0 4px 27px;
   text-decoration: none;
 }
 
@@ -737,7 +753,7 @@ a.icon:last-child {
   color: #666;
   background-color: var(--suit-footer-bg);
   font-size: .9167rem;
-  line-height: 1.5;
+  line-height: 16px;
   text-shadow: var(--suit-white-shadow);
 }
 
@@ -783,7 +799,8 @@ a.icon:last-child {
   --bs-breadcrumb-item-active-color: var(--suit-text);
   margin-top: -5px;
   font-size: 1.1667rem;
-  text-shadow: var(--suit-white-shadow);
+  line-height: 18px;
+  text-shadow: 0 1px 0 #fff;
 }
 
 .breadcrumb a {
@@ -941,22 +958,23 @@ p.errornote {
 .save-box .submit-row {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
 }
 
 .save-box .btn {
-  width: 100%;
+  width: calc(var(--suit-right-width) - 30px);
   white-space: normal;
 }
 
 .save-box .btn-high {
-  min-height: 2.9rem;
+  min-height: 40px;
 }
 
 .save-box .deletelink {
-  display: block;
-  padding: 2px 4px;
-  border-radius: var(--suit-radius);
+  display: inline;
+  padding: 0;
+  color: var(--suit-red) !important;
 }
 
 .save-box .deletelink:hover {
@@ -1014,7 +1032,7 @@ input[type=submit].default:not(.btn),
 .object-tools:not(.inner-right-column .object-tools) a:not(.btn),
 .toolbar-content > ul a:not(.btn) {
   display: inline-block;
-  padding: .3rem .8rem;
+  padding: 4px 12px;
   border: 1px solid #ccc;
   border-bottom-color: #b3b3b3;
   border-radius: var(--suit-radius);
@@ -1046,11 +1064,14 @@ input[type=submit].default:not(.btn),
 /* ==========================================================================
    Forms
    ========================================================================== */
-/* Give Django's plain form widgets the Bootstrap .form-control look */
-.suit :is(input:not([type]), input[type=text], input[type=password], input[type=email],
+/* Give Django's plain form widgets the Bootstrap 2 input look. Same low
+   specificity as Bootstrap 2 (element + attribute), so app CSS can override it */
+:where(.suit) :is(input:not([type]), input[type=text], input[type=password], input[type=email],
   input[type=url], input[type=number], input[type=tel], input[type=search],
   input[type=date], input[type=time], input[type=datetime-local], input[type=month],
-  input[type=week], textarea, select) {
+  input[type=week]),
+:where(.suit) textarea,
+:where(.suit) select {
   display: inline-block;
   max-width: 100%;
   padding: 4px 6px;
@@ -1067,10 +1088,12 @@ input[type=submit].default:not(.btn),
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-.suit :is(input:not([type]), input[type=text], input[type=password], input[type=email],
+:where(.suit) :is(input:not([type]), input[type=text], input[type=password], input[type=email],
   input[type=url], input[type=number], input[type=tel], input[type=search],
   input[type=date], input[type=time], input[type=datetime-local], input[type=month],
-  input[type=week], textarea, select):focus {
+  input[type=week]):focus,
+:where(.suit) textarea:focus,
+:where(.suit) select:focus {
   color: #555;
   background-color: var(--bs-body-bg);
   border-color: rgba(82, 168, 236, .8);
@@ -1087,13 +1110,14 @@ input[type=submit].default:not(.btn),
   background-color: var(--bs-secondary-bg);
 }
 
-.suit select:not([multiple]):not([size]) {
-  appearance: none;
-  padding-right: 2rem;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right .6rem center;
-  background-size: 12px 9px;
+/* Native select controls, as in Bootstrap 2 */
+.suit select:not([multiple]):not([size]),
+.suit select.form-select {
+  appearance: auto;
+  height: 28px;
+  padding: 4px 6px;
+  background-image: none;
+  box-shadow: none;
 }
 
 .suit select[multiple] {
@@ -1101,15 +1125,23 @@ input[type=submit].default:not(.btn),
   min-width: 12rem;
 }
 
-.suit textarea {
-  width: 100%;
-  max-width: 48rem;
+/* Bootstrap 2 default control width in forms; app classes still override it */
+:where(.suit .controls) :is(input:not([type]), input[type=text], input[type=password],
+  input[type=email], input[type=url], input[type=number], input[type=tel], input[type=search]),
+:where(.suit .controls) textarea,
+:where(.suit .controls) select:not([multiple]) {
+  width: 220px;
 }
 
+.suit :is(.form-control, .form-select) {
+  color: #555;
+}
+
+/* Bootstrap 2 had no small inputs: search bar controls are regular 12px / 28px */
 .suit .form-control-sm, .suit .form-select-sm {
-  padding-top: .2rem;
-  padding-bottom: .2rem;
-  font-size: .9167rem;
+  padding: 4px 6px;
+  font-size: 1rem;
+  border-radius: 4px;
 }
 
 .suit input[type=checkbox], .suit input[type=radio] {
@@ -1125,15 +1157,9 @@ input[type=submit].default:not(.btn),
 }
 
 /* Django field widths */
-.suit .vTextField, .suit .vUUIDField { width: 22rem; }
-.suit .vURLField { width: 30rem; }
-.suit .vLargeTextField, .suit .vXMLLargeTextField { width: 100%; }
-.suit .vIntegerField { width: 7rem; }
-.suit .vBigIntegerField { width: 12rem; }
-.suit .vForeignKeyRawIdAdminField { width: 7rem; }
-.suit .vManyToManyRawIdAdminField { width: 16rem; }
-.suit .vDateField { width: 9rem; }
-.suit .vTimeField { width: 7rem; }
+.suit .vForeignKeyRawIdAdminField { width: 104px; }
+.suit .vManyToManyRawIdAdminField { width: 220px; }
+.suit .vDateField, .suit .vTimeField { width: auto; }
 .suit select:not([multiple]) { min-width: 8rem; }
 .suit .controls select:not([multiple]) { min-width: 220px; }
 
@@ -1154,26 +1180,44 @@ input[type=submit].default:not(.btn),
 
 /* Fieldsets
    -------------------------------------------------------------------------- */
+/* 35px between fieldsets, the title sits in that gap (original theme) */
 fieldset.suit-fieldset {
-  margin: 0 0 1.5rem;
+  margin: 0;
   padding: 0;
   border: 0;
   min-width: 0;
 }
 
+fieldset.suit-fieldset ~ fieldset.suit-fieldset.first,
+fieldset.suit-fieldset ~ .suit-include {
+  margin-top: 35px;
+}
+
+fieldset.suit-fieldset:last-of-type {
+  margin-bottom: 20px;
+}
+
 .suit-fieldset .legend,
-.inline-group .inline-heading,
 .suit-tab > h2, .suit-include > h2 {
   margin: 0;
-  padding: 0 0 .4rem .6rem;
+  padding: 0 0 0 10px;
   font-size: 1.3333rem;
   font-weight: bold;
-  line-height: 1.6;
+  line-height: 36px;
+}
+
+.inline-group .inline-heading {
+  margin: -4px 0 0;
+  padding: 0 0 0 10px;
+  font-size: 1.3333rem;
+  font-weight: bold;
+  line-height: 24px;
 }
 
 .legend .description, h2 .description {
   display: inline-block;
-  margin-left: 1rem;
+  margin-left: 20px;
+  line-height: normal;
   font-size: 1rem;
   font-weight: normal;
   color: var(--suit-grey);
@@ -1192,14 +1236,18 @@ fieldset.suit-fieldset {
 }
 
 /* "wide" fieldsets have wider labels, "full-width" ones hide them (WYSIWYG editors) */
-fieldset.wide .form-row > .control-label {
-  flex-basis: 230px;
-  width: 230px;
+fieldset.wide .fieldset-body {
+  --suit-label-width: 230px;
 }
 
 fieldset.full-width .fieldset-body {
+  display: block;
   background: transparent;
   box-shadow: none;
+}
+
+fieldset.full-width .fieldset-body > .form-row {
+  display: block;
 }
 
 fieldset.full-width .form-row > .control-label {
@@ -1294,13 +1342,21 @@ details.suit-collapse[open] > summary > h2::after {
 }
 
 details.suit-collapse:not([open]) > summary > h2 {
+  font-size: 1.0833rem;
   font-weight: normal;
 }
 
 /* Form rows: label column + controls column */
-/* Row separators only in the label column, the controls column is one block */
+/* Label column sized like the original table layout: at least
+   --suit-label-width, wider when a label can't wrap. Separators only in the
+   label column, the controls column is one block */
+.fieldset-body {
+  display: grid;
+  grid-template-columns: minmax(var(--suit-label-width), min-content) minmax(0, 1fr);
+}
+
 .fieldset-body > .form-row {
-  display: flex;
+  display: contents;
 }
 
 .fieldset-body > .form-row > .control-label {
@@ -1312,7 +1368,17 @@ details.suit-collapse:not([open]) > summary > h2 {
 }
 
 .fieldset-body > .form-row:first-child > .control-label {
+  padding-top: 15px;
   border-top-left-radius: var(--suit-radius);
+}
+
+.fieldset-body > .form-row:first-child > .controls {
+  padding-top: 10px;
+}
+
+.fieldset-body > .form-row:last-child > .control-label,
+.fieldset-body > .form-row:last-child > .controls {
+  padding-bottom: 10px;
 }
 
 .fieldset-body > .form-row:last-child > .control-label {
@@ -1320,23 +1386,19 @@ details.suit-collapse:not([open]) > summary > h2 {
 }
 
 .form-row > .control-label {
-  flex: 0 0 var(--suit-label-width);
-  width: var(--suit-label-width);
   padding: 10px 20px 5px 10px;
   background: #fff;
   text-align: right;
-  overflow-wrap: anywhere;
 }
 
 .form-row > .control-label label {
   margin: 0;
-  white-space: normal;
 }
 
 .form-row > .controls {
-  flex: 1 1 auto;
   min-width: 0;
   padding: 5px 15px;
+  line-height: 26px;
   border-left: 1px solid #ecedee;
 }
 
@@ -1344,30 +1406,48 @@ details.suit-collapse:not([open]) > summary > h2 {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: .25rem 1.5rem;
+  gap: 0 15px;
 }
 
 .multi-field-box {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: .25rem .6rem;
+  gap: 0 10px;
 }
 
 .multi-field-box > .errorlist, .multi-field-box > .help {
   flex-basis: 100%;
+  /* don't widen the box: wrap under the field like Bootstrap 2 help-block */
+  contain: inline-size;
 }
 
 .form-row .field-controls {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: .25rem .5rem;
-  min-height: 2.15rem;
+  gap: 0 5px;
+  min-height: 28px;
+}
+
+/* Help text next to the field (Bootstrap 2 help-inline) or below it */
+.form-row .field-box > .field-controls > :is(.datetime, p.datetime),
+.form-row .field-controls > .readonly:has(iframe) {
+  flex-basis: 100%;
+}
+
+.form-row .field-controls > .help-inline {
+  margin: 0;
+  padding-left: 5px;
+}
+
+.form-row .help-block {
+  margin: 3px 0 0;
 }
 
 .form-row .readonly {
-  padding: .1rem 0;
+  margin-right: 5px;
+  line-height: 26px;
 }
 
 .form-row .readonly p, .controls p {
@@ -1378,7 +1458,7 @@ details.suit-collapse:not([open]) > summary > h2 {
 .help, .help-block, .help-inline, .form-row .form-text {
   margin-top: .2rem;
   font-size: .9167rem;
-  line-height: 1.4;
+  line-height: normal;
   color: var(--suit-grey);
 }
 
@@ -1449,20 +1529,51 @@ td.errors :is(input, select, textarea) {
 }
 
 .related-widget-wrapper-link img {
-  width: 15px;
-  height: 15px;
+  display: none;
 }
+
+.related-widget-wrapper-link {
+  color: var(--suit-text);
+  text-decoration: none;
+}
+
+.related-widget-wrapper-link::before {
+  font-family: bootstrap-icons;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.related-widget-wrapper-link.add-related::before { content: "\f4f9"; }
+.related-widget-wrapper-link.change-related::before { content: "\f4c9"; }
+.related-widget-wrapper-link.view-related::before { content: "\f33e"; }
+.related-widget-wrapper-link.delete-related::before { content: "\f622"; }
 
 .linked-select-link {
   font-size: .9167rem;
 }
 
-/* Raw id lookups */
-.related-lookup {
+/* Raw id lookups (Django draws the icon in admin/css/forms.css, which Suit empties) */
+a.related-lookup {
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  vertical-align: middle;
+  width: auto;
+  height: auto;
+  padding: 0 4px 0 6px;
+  color: var(--suit-text);
+  background: none;
+  opacity: .75;
+  text-decoration: none;
+}
+
+a.related-lookup::before {
+  content: "\f52a";
+  font-family: bootstrap-icons;
+  font-size: 14px;
+  line-height: 1;
+  vertical-align: -2px;
+}
+
+a.related-lookup:hover {
+  opacity: 1;
 }
 
 /* Date / time widgets */
@@ -1479,8 +1590,7 @@ td.errors :is(input, select, textarea) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: .4rem 1rem;
-  line-height: 2;
+  gap: 0 10px;
 }
 
 .datetime br {
@@ -1507,8 +1617,8 @@ p.datetime {
   padding: .3rem .6rem;
 }
 
-.suit .suit-date > .vDateField { width: 8rem; }
-.suit .suit-date > .vTimeField { width: 6.5rem; }
+.suit .suit-date > .vDateField { width: 82px; }
+.suit .suit-date > .vTimeField { width: 70px; }
 
 /* Suit date widgets: Django's calendar / clock link becomes the input add-on */
 .suit-date > .input-group-text { order: 2; }
@@ -1547,13 +1657,22 @@ p.datetime {
   text-decoration: none;
 }
 
+/* Split date/time fields show only "Today" / "Now", as in the original theme */
+.datetime .suit-date > .datetimeshortcuts > :last-child {
+  display: none;
+}
+
+.datetime .suit-date > input {
+  border-radius: 4px !important;
+}
+
 .suit-date > .datetimeshortcuts > :last-child:hover {
   background: var(--bs-secondary-bg);
 }
 
 .suit-date > .datetimeshortcuts > a:first-child {
   align-self: center;
-  margin-left: .6rem;
+  margin-left: 5px;
   font-size: .9167rem;
 }
 
@@ -1615,10 +1734,16 @@ p.datetime {
   z-index: 1100;
 }
 
-/* filter_horizontal / filter_vertical (Django's SelectFilter, styled by admin/css/widgets.css) */
+/* filter_horizontal / filter_vertical (Django's SelectFilter). Plain, like
+   Suit on Bootstrap 2, which never loaded admin/css/widgets.css */
 .suit .selector {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 0 10px;
   width: 100%;
-  max-width: 50rem;
+  max-width: 640px;
+  float: none;
 }
 
 .related-widget-wrapper:has(> .selector) {
@@ -1627,46 +1752,186 @@ p.datetime {
 }
 
 .suit .selector.stacked {
-  max-width: 26rem;
+  flex-direction: column;
+  max-width: 300px;
 }
 
-.suit .selector :is(select, input) {
+.suit .selector :is(.selector-available, .selector-chosen) {
+  display: block;
+  flex: 1 1 0;
+  width: auto;
+  min-width: 150px;
+  max-width: 300px;
+  float: none;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.suit .selector.stacked :is(.selector-available, .selector-chosen) {
+  width: 100%;
+  max-width: none;
+}
+
+/* titles: <h2> on Django < 5.0, .selector-*-title with a <label> after */
+.suit .selector :is(.selector-available, .selector-chosen) > h2,
+.suit .selector :is(.selector-available-title, .selector-chosen-title) {
+  margin: 0 0 2px 5px;
+  padding: 0;
   font-size: 1rem;
+  font-weight: bold;
+  line-height: 18px;
+  color: var(--suit-text);
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  text-shadow: none;
 }
 
-.suit .selector :is(h2, label) {
-  text-shadow: none;
+.suit .selector :is(.selector-available-title, .selector-chosen-title) label {
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.suit .selector :is(.selector-available-title, .selector-chosen-title) .helptext,
+.suit .selector h2 .help-tooltip {
+  display: none;
 }
 
 .suit .selector .selector-filter {
   display: flex;
   align-items: center;
   gap: .3rem;
+  margin: 0 0 -1px;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.suit .selector .selector-filter label {
+  display: none;
 }
 
 .suit .selector .selector-filter input {
   flex: 1 1 auto;
-  width: auto;
+  width: 100%;
   min-width: 0;
-}
-
-/* Django < 5.0 uses fixed widths and a plain <h2> title */
-.suit .selector :is(.selector-available, .selector-chosen) {
-  flex: 1 1 0;
-  width: auto;
-  min-width: 0;
+  margin: 0;
+  border-radius: 4px 4px 0 0;
 }
 
 .suit .selector select {
+  display: block;
   width: 100%;
+  height: auto;
+  min-height: 80px;
+  max-height: 184px;
+  margin: 0;
+  padding: 4px;
+  border-radius: 0 0 4px 4px;
 }
 
-.suit .selector :is(.selector-available, .selector-chosen) > h2 {
+.suit .selector .selector-chosen select {
+  border-radius: 4px;
+}
+
+/* Taller lists for the auth app, as in the original theme */
+.suit #id_groups_from { min-height: 80px; }
+.suit #id_user_permissions_from { min-height: 184px; }
+
+.suit .selector ul.selector-chooser {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 4px;
+  width: auto;
   margin: 0;
-  padding: 8px;
+  padding: 0;
+  list-style: none;
+  background: none;
+  border-radius: 0;
+}
+
+.suit .selector.stacked ul.selector-chooser {
+  flex-direction: row;
+  align-self: flex-start;
+}
+
+.suit .selector ul.selector-chooser li {
+  margin: 0;
+}
+
+.suit .selector a:is(.selector-add, .selector-remove) {
+  display: block;
+  width: auto;
+  height: auto;
+  padding: 2px 4px;
+  overflow: visible;
+  font-size: 0;
+  text-indent: 0;
+  color: var(--suit-text);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  opacity: .3;
+  text-decoration: none;
+}
+
+.suit .selector a:is(.selector-add, .selector-remove)::before {
+  font-family: bootstrap-icons;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.suit .selector a.selector-add::before { content: "\f138"; }
+.suit .selector a.selector-remove::before { content: "\f12f"; }
+.suit .selector.stacked a.selector-add::before { content: "\f128"; }
+.suit .selector.stacked a.selector-remove::before { content: "\f148"; }
+
+.suit .selector a:is(.selector-add, .selector-remove).active {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.suit .selector a:is(.selector-add, .selector-remove).active:hover {
+  background: #fff;
+  border-color: #ddd;
+}
+
+.suit .selector a:is(.selector-chooseall, .selector-clearall) {
+  display: inline-block;
+  margin: 3px 0 0 5px;
+  padding: 0;
   font-size: 1rem;
   font-weight: normal;
-  line-height: 1.4;
+  text-align: left;
+  color: var(--suit-grey);
+  background: none;
+  text-decoration: none;
+}
+
+.suit .selector a:is(.selector-chooseall, .selector-clearall).active {
+  color: var(--suit-link);
+}
+
+.suit .selector a:is(.selector-chooseall, .selector-clearall).active:hover {
+  text-decoration: underline;
+}
+
+.suit .selector .list-footer-display {
+  margin: 3px 0 0 5px;
+  font-size: .9167rem;
+  color: var(--suit-grey);
+  background: none;
+  border: 0;
+  text-align: left;
+}
+
+.suit .selector .list-footer-display__clear {
+  color: var(--suit-link);
 }
 
 /* File inputs */
@@ -1693,25 +1958,26 @@ p.datetime {
 
 /* Form tabs
    -------------------------------------------------------------------------- */
+/* Boxed tabs, as in Suit on Bootstrap 2 */
 .nav-tabs-suit {
-  gap: 2px;
-  margin-bottom: 15px;
+  margin: 0 4px 15px;
+  border-bottom-color: #ddd;
 }
 
-/* Boxed tabs, as in Suit on Bootstrap 2 */
 .nav-tabs-suit .nav-link {
-  margin-bottom: -1px;
-  padding: .6667rem 1.6667rem;
+  margin: 0 2px -1px 0;
+  padding: 8px 20px 7px;
   font-size: 1.0833rem;
-  line-height: 1.5;
-  background: #fff;
-  border: 1px solid #e3e3e3;
-  border-bottom-color: var(--bs-border-color);
+  line-height: 18px;
+  background: var(--suit-bg-light);
+  border: 1px solid #ddd;
+  border-radius: 5px 5px 0 0;
+  box-shadow: inset 1px 1px 0 #fff;
 }
 
 .nav-tabs-suit .nav-link:hover {
-  background: var(--suit-bg-light);
-  border-color: #d5d5d5 #d5d5d5 var(--bs-border-color);
+  background: #fff;
+  border-color: #ddd;
 }
 
 .nav-tabs-suit .nav-link.error, .nav-tabs-suit .nav-link.error:hover {
@@ -1722,7 +1988,9 @@ p.datetime {
   font-weight: bold;
   color: var(--suit-text);
   background: var(--suit-bg);
-  border-color: var(--bs-border-color) var(--bs-border-color) var(--suit-bg);
+  border-color: #ddd #ddd var(--suit-bg);
+  box-shadow: none;
+  text-shadow: var(--suit-white-shadow);
 }
 
 .suit-form.has-tabs .suit-tab:not(.show) {
@@ -1737,7 +2005,11 @@ p.datetime {
    Inlines
    ========================================================================== */
 .inline-group {
-  margin: 0 0 1.5rem;
+  margin: 15px 0 0;
+}
+
+.inline-group:last-child {
+  margin-bottom: 20px;
 }
 
 .inline-group > fieldset.module {
@@ -1758,7 +2030,6 @@ p.datetime {
 }
 
 .inline-related.tabular thead th {
-  white-space: nowrap;
   font-weight: bold;
 }
 
@@ -1766,9 +2037,12 @@ p.datetime {
   max-width: 100%;
 }
 
-.inline-related.tabular td :is(.vTextField, .vURLField, .vUUIDField) {
-  width: 100%;
-  min-width: 8rem;
+/* Bootstrap 2 default control width, also in tabular inlines */
+:where(.inline-related.tabular td) :is(input:not([type]), input[type=text], input[type=password],
+  input[type=email], input[type=url], input[type=number], input[type=tel]),
+:where(.inline-related.tabular td) textarea,
+:where(.inline-related.tabular td) select:not([multiple]) {
+  width: 220px;
 }
 
 .inline-related.tabular td.delete, .inline-related.tabular th.delete {
@@ -1787,7 +2061,8 @@ p.datetime {
 }
 
 .inline-group .add-row td, .inline-group div.add-row {
-  padding: .45rem .9rem;
+  padding: 6px 0 4px 15px;
+  border-top: 1px solid #eee;
   background: linear-gradient(#efefef, #e2e2e2);
   box-shadow: inset 1px 1px 0 #fff;
   text-shadow: var(--suit-white-shadow);
@@ -1800,17 +2075,10 @@ p.datetime {
 }
 
 .inline-group .add-row a, .inline-group a.addlink {
-  text-decoration: none;
   padding: 0;
   background: none;
-}
-
-.inline-group .add-row a::before {
-  content: "\f4f9";
-  font-family: bootstrap-icons;
-  margin-right: .4rem;
-  color: var(--bs-success);
-  vertical-align: -.125em;
+  font-size: .9167rem;
+  text-decoration: underline;
 }
 
 a.inline-deletelink {
@@ -1844,9 +2112,10 @@ a.inline-deletelink::before {
   flex-wrap: wrap;
   gap: .25rem .75rem;
   margin: 0;
-  padding: .45rem .9rem;
+  padding: 0 10px;
   font-size: 1rem;
-  font-weight: normal;
+  font-weight: bold;
+  line-height: 34px;
   background: linear-gradient(#f3f3f3, #e5e5e5);
   border-radius: var(--suit-radius) var(--suit-radius) 0 0;
   box-shadow: var(--suit-box-shadow);
@@ -1969,7 +2238,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 }
 
 #changelist-search #searchbar {
-  width: 13rem;
+  width: 277px;
 }
 
 #changelist-search .search-filters {
@@ -1978,7 +2247,11 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 
 #changelist-search .search-filter {
   width: auto;
-  max-width: 15rem;
+  max-width: 200px;
+}
+
+#changelist-search .suit-date > .vDateField {
+  width: 94px;
 }
 
 #changelist-search :is(#searchbar, .search-filter).active {
@@ -2026,7 +2299,20 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   box-shadow: inset 1px 1px 0 #fff, inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
 }
 
+.suit :is(#result_list, .inline-related.tabular .table, #change-history) > :not(caption) > * > * {
+  text-shadow: var(--suit-white-shadow);
+}
+
+.suit .inline-related.tabular .table > :not(caption) > * > * + * {
+  border-left: 1px solid #ddd;
+}
+
+.suit :is(#result_list, .inline-related.tabular .table, #change-history) > tbody > tr + tr > * {
+  border-top-color: #eee;
+}
+
 .suit :is(#result_list, .inline-related.tabular .table, #change-history) > thead > tr > th {
+  line-height: normal;
   padding: 7px 10px 8px;
   border-top: 0;
   vertical-align: middle;
@@ -2078,12 +2364,16 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   text-decoration: none;
 }
 
-#result_list thead th.sorted {
-  background: #e5e5e5 linear-gradient(#ebf1f4, #dde5e9);
+.suit #result_list > thead > tr > th.sorted {
+  padding-right: 55px;
+  background: #ddd linear-gradient(#e7e7e7, #ddd);
 }
 
 #result_list thead th .sortoptions {
-  float: right;
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
   display: inline-flex;
   align-items: center;
   gap: 2px;
@@ -2180,7 +2470,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 #changelist .actions .all,
 #changelist .actions .question,
 #changelist .actions .clear {
-  color: var(--bs-secondary-color);
+  color: var(--suit-text);
 }
 
 
@@ -2206,7 +2496,7 @@ tbody > tr:first-child .inline-sortable .sortable-up {
    Dashboard
    ========================================================================== */
 #content-main > .module {
-  margin-bottom: 1rem;
+  margin-bottom: 18px;
 }
 
 .table-overview {
@@ -2220,19 +2510,21 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 
 .table-overview caption {
   caption-side: top;
-  padding: 0 0 .35rem .3rem;
-  font-size: 1.3333rem;
+  padding: 0;
+  margin-bottom: 3px;
+  line-height: 18px;
   color: inherit;
-  text-shadow: var(--suit-white-shadow);
 }
 
 .table-overview caption a {
+  font-size: 1.4167rem;
   text-decoration: none;
 }
 
 .table-overview th, .table-overview td {
-  padding: .45rem .9rem;
-  border-bottom: 1px solid var(--suit-border-light);
+  padding: 10px 20px 8px 15px;
+  vertical-align: top;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .table-overview tr:last-child > * {
@@ -2244,6 +2536,8 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   background: #fff;
   font-weight: normal;
   text-align: right;
+  border-bottom-color: var(--suit-border-light);
+  border-right: 1px solid var(--suit-border-light);
 }
 
 .table-overview th a {
@@ -2260,8 +2554,8 @@ tbody > tr:first-child .inline-sortable .sortable-up {
 }
 
 .table-overview td {
-  border-left: 1px solid #ecedee;
   white-space: nowrap;
+  vertical-align: middle;
 }
 
 .table-overview td .bi {
@@ -2464,7 +2758,12 @@ body.login #content-main {
 }
 
 @media (max-width: 767.98px) {
+  .fieldset-body {
+    display: block;
+  }
+
   .fieldset-body > .form-row {
+    display: flex;
     flex-direction: column;
     border-bottom: 1px solid var(--suit-border-light);
   }
