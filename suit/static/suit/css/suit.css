@@ -1045,6 +1045,19 @@ input[type=submit].default:not(.btn) {
   color: #fff;
 }
 
+/* Django's secondary "Cancel" / "No, take me back" link: Bootstrap 2 default button */
+.submit-row a.button.cancel-link {
+  border-color: #ccc #ccc #b3b3b3;
+  color: #333;
+  background: #f5f5f5 linear-gradient(#fff, #e6e6e6);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, .75);
+}
+
+.submit-row a.button.cancel-link:hover {
+  color: #333;
+  background: #e6e6e6;
+}
+
 /* Tool links of 3rd party change lists (Import, Export ...) */
 .object-tools:not(.inner-right-column .object-tools) a:not(.btn),
 .toolbar-content > ul a:not(.btn) {
@@ -1303,7 +1316,15 @@ fieldset.module.aligned:not(.suit-fieldset) > .form-row:last-of-type {
   border-bottom: 0;
 }
 
-fieldset.module.aligned:not(.suit-fieldset) > .form-row > .flex-container {
+/* The label and field may also be wrapped in a plain <div> (Django 4.2, custom templates) */
+fieldset.module.aligned:not(.suit-fieldset) > .form-row > div:not([class]) {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+fieldset.module.aligned:not(.suit-fieldset) > .form-row > .flex-container,
+fieldset.module.aligned:not(.suit-fieldset) > .form-row > div:not([class]):has(> label),
+fieldset.module.aligned:not(.suit-fieldset) > .form-row > div > .flex-container {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1311,14 +1332,16 @@ fieldset.module.aligned:not(.suit-fieldset) > .form-row > .flex-container {
 }
 
 fieldset.module.aligned:not(.suit-fieldset) > .form-row > label,
-fieldset.module.aligned:not(.suit-fieldset) > .form-row > .flex-container > label {
+fieldset.module.aligned:not(.suit-fieldset) > .form-row > .flex-container > label,
+fieldset.module.aligned:not(.suit-fieldset) > .form-row > div:not([class]) > label,
+fieldset.module.aligned:not(.suit-fieldset) > .form-row > div > .flex-container > label {
   flex: 0 0 calc(var(--suit-label-width) - 2rem);
   margin: 0;
   text-align: right;
 }
 
-fieldset.module.aligned:not(.suit-fieldset) > .form-row > .help,
-fieldset.module.aligned:not(.suit-fieldset) > .form-row > .errorlist {
+fieldset.module.aligned:not(.suit-fieldset) > .form-row > :is(.help, .errorlist),
+fieldset.module.aligned:not(.suit-fieldset) > .form-row > div:not([class]) > :is(.help, .errorlist) {
   flex-basis: 100%;
   margin-left: calc(var(--suit-label-width) - 1rem);
 }
@@ -1327,7 +1350,8 @@ fieldset.module.aligned:not(.suit-fieldset) > .form-row > .errorlist {
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
-  margin: 0 0 1rem calc(var(--suit-label-width) - 1rem);
+  /* line up with the fields of the fieldset above */
+  margin: 0 0 1rem var(--suit-label-width);
 }
 
 /* Collapsible fieldsets & inlines (Django's "collapse" class) */
