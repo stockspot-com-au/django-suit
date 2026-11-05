@@ -1981,6 +1981,29 @@ p.datetime {
   color: var(--suit-link);
 }
 
+/* Django's widgets.css sizes text in rem for a 16px root, but Suit's root is
+   12px: 11px became 8.25px. Original Suit didn't load widgets.css, so this text
+   had the normal 12px; the date and time popups get Django's intended sizes. */
+.suit :is(p.file-upload, p.url, table p.datetime) {
+  font-size: 1rem;
+}
+
+.suit span.clearable-file-input label {
+  font-size: inherit;
+}
+
+.suit :is(.calendarbox h2, .calendar th, .calendar td, .clockbox, .calendar-cancel) {
+  font-size: 1rem;
+}
+
+.suit :is(.calendar-shortcuts, .selector .helptext) {
+  font-size: .9167rem;
+}
+
+.suit .calendarnav {
+  font-size: .8333rem;
+}
+
 /* File inputs */
 .file-upload {
   line-height: 1.8;
