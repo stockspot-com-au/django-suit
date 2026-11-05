@@ -593,8 +593,9 @@ a.icon:last-child {
 
 #content.colMS {
   display: grid;
-  grid-template-columns: minmax(0, max-content) minmax(14rem, 22rem);
-  column-gap: 2rem;
+  /* Like the original floated columns: My Actions is as wide as its longest entry */
+  grid-template-columns: minmax(0, max-content) minmax(200px, max-content);
+  column-gap: 20px;
   align-items: start;
 }
 
