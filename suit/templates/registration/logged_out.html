@@ -1,13 +1,15 @@
 {% extends "admin/base_site.html" %}
 {% load i18n %}
-{% load url from suit_compat %}
 
 {% block breadcrumbs %}
-    <div class="breadcrumbs"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></div>{% endblock %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a></li>
+  </ol>
+{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
 
 {% block content %}
-    <h3 class="italic-title">{% trans "Thanks for spending some quality time with the Web site today." %}</h3>
-
-    <br>
-    <div class="f14">&nbsp; <a href="{% url 'admin:index' %}">{% trans 'Log in again' %}</a></div>
+  <h3 class="italic-title">{% translate "Thanks for spending some quality time with the web site today." %}</h3>
+  <p><a href="{% url 'admin:index' %}">{% translate 'Log in again' %}</a></p>
 {% endblock %}

@@ -20,15 +20,15 @@ def default_config():
         'SEARCH_URL': '/admin/auth/user/',
         'MENU_OPEN_FIRST_CHILD': True,
         'MENU_ICONS': {
-            'auth': 'icon-lock',
-            'sites': 'icon-leaf',
+            'auth': 'bi bi-lock',
+            'sites': 'bi bi-globe',
         },
         # 'MENU_EXCLUDE': ('auth.group',),
         # 'MENU': (
         #     'sites',
-        #     {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
-        #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
-        #     {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
+        #     {'app': 'auth', 'icon': 'bi bi-lock', 'models': ('user', 'group')},
+        #     {'label': 'Settings', 'icon': 'bi bi-gear', 'models': ('auth.user', 'auth.group')},
+        #     {'label': 'Support', 'icon': 'bi bi-question-circle', 'url': '/support/'},
         # ),
 
         # misc
@@ -55,24 +55,3 @@ ModelAdmin.actions_on_bottom = True
 
 # Set global list_per_page
 ModelAdmin.list_per_page = get_config('LIST_PER_PAGE')
-
-def setup_filer():
-    from suit.widgets import AutosizedTextarea
-    from filer.admin.imageadmin import ImageAdminForm
-    from filer.admin.fileadmin import FileAdminChangeFrom
-    from filer.admin import FolderAdmin
-
-    def ensure_meta_widgets(meta_cls):
-        if not hasattr(meta_cls, 'widgets'):
-            meta_cls.widgets = {}
-
-        meta_cls.widgets['description'] = AutosizedTextarea
-
-    ensure_meta_widgets(ImageAdminForm.Meta)
-    ensure_meta_widgets(FileAdminChangeFrom.Meta)
-    FolderAdmin.actions_on_top = False
-    FolderAdmin.actions_on_bottom = True
-
-
-if 'filer' in settings.INSTALLED_APPS:
-    setup_filer()

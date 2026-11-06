@@ -67,7 +67,7 @@ Specify ``input_type`` and use any of `HTML5 input types <http://www.w3schools.c
 EnclosedInput
 -------------
 
-Supports `Twitter Bootstrap prepended/appended form inputs <http://twitter.github.com/bootstrap/base-css.html#forms>`_. ``EnclosedInput`` widget accepts two arguments ``prepend=`` and ``append=``. Values can be ``text``, ``icon-class`` or ``html`` (starts with html tag). You can also use both ``prepend=`` and ``append=`` together::
+Supports `Bootstrap input groups <https://getbootstrap.com/docs/5.3/forms/input-group/>`_. ``EnclosedInput`` widget accepts two arguments ``prepend=`` and ``append=``. Values can be ``text``, an icon class (``bi-envelope``, ``bi bi-envelope`` or legacy ``icon-envelope``) or ``html`` (starts with html tag). You can also use both ``prepend=`` and ``append=`` together::
 
   from django.forms import ModelForm
   from suit.widgets import EnclosedInput
@@ -101,7 +101,7 @@ Supports `Twitter Bootstrap prepended/appended form inputs <http://twitter.githu
 AutosizedTextarea
 -----------------
 
-``AutosizedTextarea`` enables automatic height based on user input for textarea elements. Uses `jQuery Autosize <http://www.jacklmoore.com/autosize>`_ plugin. All the required javascript will be automatically attached. Usage::
+``AutosizedTextarea`` enables automatic height based on user input for textarea elements. Uses CSS ``field-sizing: content`` where the browser supports it, with a small JavaScript fallback in ``suit.js``. Usage::
 
   from django.forms import ModelForm
   from suit.widgets import AutosizedTextarea

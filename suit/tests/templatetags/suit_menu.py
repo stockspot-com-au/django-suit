@@ -1,21 +1,10 @@
 from django.conf import settings
 from django.contrib.auth.models import Permission
+from django.test import override_settings
+from django.urls import reverse
 from suit.templatetags.suit_menu import get_menu
 from suit.tests.mixins import ModelsTestCaseMixin, UserTestCaseMixin
 from suit.tests.models import test_app_label
-
-try:
-    from django.core.urlresolvers import reverse
-except ImportError:
-    # For Django >= 2.0
-    from django.urls import reverse
-
-
-# conditional import, force_unicode was renamed in Django 1.5
-try:
-    from django.utils.encoding import force_unicode
-except ImportError:
-    from django.utils.encoding import force_text as force_unicode
 
 app_label = test_app_label()
 
@@ -127,7 +116,7 @@ class SuitMenuTestCase(ModelsTestCaseMixin, UserTestCaseMixin):
         self.assertEqual(menu[i]['label'], app_label.title())
         self.assertEqual(menu[i]['icon'], None)
         self.assertEqual(menu[i]['models'][0]['url'], first_model_url)
-        self.assertEqual(force_unicode(menu[0]['models'][0]['label']), 'Albums')
+        self.assertEqual(str(menu[0]['models'][0]['label']), 'Albums')
 
         i += 1 # as dict
         self.assertEqual(menu[i]['url'], first_model_url)
@@ -203,13 +192,13 @@ class SuitMenuTestCase(ModelsTestCaseMixin, UserTestCaseMixin):
         first_model_url = reverse('admin:%s_book_changelist' % app_label)
         self.assertEqual(menu[i]['models'][0]['url'], first_model_url)
         self.assertEqual(len(menu[i]['models']), 4)
-        self.assertEqual(force_unicode(menu[i]['models'][2]['label']),
+        self.assertEqual(str(menu[i]['models'][2]['label']),
                          mc[i]['models'][2]['label'])
-        self.assertEqual(force_unicode(menu[i]['models'][2]['url']),
+        self.assertEqual(str(menu[i]['models'][2]['url']),
                          mc[i]['models'][2]['url'])
-        self.assertEqual(force_unicode(menu[i]['models'][3]['label']),
+        self.assertEqual(str(menu[i]['models'][3]['label']),
                          mc[i]['models'][3]['label'])
-        self.assertEqual(force_unicode(menu[i]['models'][3]['url']),
+        self.assertEqual(str(menu[i]['models'][3]['url']),
                          mc[i]['models'][3]['url'])
 
 
@@ -296,7 +285,8 @@ class SuitMenuTestCase(ModelsTestCaseMixin, UserTestCaseMixin):
         settings.SUIT_CONFIG['MENU_ICONS'] = {'auth': icon}
         self.get_response()
         menu = self.make_menu_from_response()
-        self.assertEqual(len(menu), 4)
+        # auth, tests and templatetags (test apps) are registered
+        self.assertEqual(len(menu), 3)
         self.assertEqual(menu[0]['icon'], icon)
 
     def test_user_with_add_but_not_change(self):
@@ -380,13 +370,16 @@ class SuitMenuTestCase(ModelsTestCaseMixin, UserTestCaseMixin):
         self.assertContains(self.response, '<li class="active">')
 
 
+@override_settings(ROOT_URLCONF='suit.tests.urls.admin_at_root')
 class SuitMenuAdminRootURLTestCase(SuitMenuTestCase):
-    urls = 'suit.tests.urls.admin_at_root'
+    pass
 
 
+@override_settings(ROOT_URLCONF='suit.tests.urls.admin_i18n')
 class SuitMenuAdminI18NURLTestCase(SuitMenuTestCase):
-    urls = 'suit.tests.urls.admin_i18n'
+    pass
 
 
+@override_settings(ROOT_URLCONF='suit.tests.urls.admin_custom')
 class SuitMenuAdminCustomURLTestCase(SuitMenuTestCase):
-    urls = 'suit.tests.urls.admin_custom'
+    pass

@@ -1,12 +1,15 @@
+import re
+
 from django.test import TestCase
 from suit.widgets import LinkedSelect, HTML5Input, EnclosedInput, \
     NumberInput, SuitDateWidget, SuitTimeWidget, SuitSplitDateTimeWidget, \
     AutosizedTextarea
-from django.utils.translation import ugettext as _
-from django.templatetags.static import static
-from suit import utils
+from django.utils.translation import gettext as _
 
-django_version = utils.django_major_version()
+
+def strip_aria(html):
+    """Django 6.0+ adds aria-describedby to admin date/time inputs"""
+    return re.sub(r' aria-describedby="[^"]*"', '', html)
 
 
 class WidgetsTestCase(TestCase):
@@ -32,21 +35,21 @@ class WidgetsTestCase(TestCase):
         return enclosed_widget.render('enc', 123)
 
     def get_enclosed_widget_html(self, values):
-        return '<div class="input-prepend input-append">%s<input name="enc" ' \
+        return '<div class="input-group suit-input-group">%s<input name="enc" ' \
                'type="text" value="123" />%s</div>' % values
 
     def test_EnclosedInput_as_text(self):
         inp = EnclosedInput(prepend='p', append='a')
         output = self.render_enclosed_widget(inp)
-        result = ('<span class="add-on">p</span>',
-                  '<span class="add-on">a</span>')
+        result = ('<span class="input-group-text">p</span>',
+                  '<span class="input-group-text">a</span>')
         self.assertHTMLEqual(output, self.get_enclosed_widget_html(result))
 
     def test_EnclosedInput_as_icon(self):
-        inp = EnclosedInput(prepend='icon-fire', append='icon-leaf')
+        inp = EnclosedInput(prepend='icon-fire', append='bi-tree')
         output = self.render_enclosed_widget(inp)
-        result = ('<span class="add-on"><i class="icon-fire"></i></span>',
-                  '<span class="add-on"><i class="icon-leaf"></i></span>')
+        result = ('<span class="input-group-text"><i class="icon-fire"></i></span>',
+                  '<span class="input-group-text"><i class="bi bi-tree"></i></span>')
         self.assertHTMLEqual(output, self.get_enclosed_widget_html(result))
 
     def test_EnclosedInput_as_html(self):
@@ -54,6 +57,11 @@ class WidgetsTestCase(TestCase):
         output = self.render_enclosed_widget(inp)
         result = ('<em>p</em>', '<em>a</em>')
         self.assertHTMLEqual(output, self.get_enclosed_widget_html(result))
+
+    def test_EnclosedInput_renders_twice(self):
+        inp = EnclosedInput(prepend='p')
+        self.assertHTMLEqual(self.render_enclosed_widget(inp),
+                             self.render_enclosed_widget(inp))
 
     def test_SuitDateWidget(self):
         sdw = SuitDateWidget()
@@ -72,19 +80,13 @@ class WidgetsTestCase(TestCase):
         self.assertEqual('p', sdw.attrs['placeholder'])
 
     def get_SuitDateWidget_output(self):
-        if django_version < (1, 11):
-            return '<div class="input-append suit-date"><input class="vDateField ' \
-                   'input-small " name="sdw" placeholder="Date" ' \
-                   'size="10" type="text" /><span class="add-on"><i ' \
-                   'class="icon-calendar"></i></span></div>'
-        else:
-            return '<div class="input-append suit-date"><input type="text" name="sdw" ' \
-                   'value="" class="vDateField input-small " size="10" placeholder="Date" />' \
-                   '<span class="add-on"><i class="icon-calendar"></i></span></div>'
+        return '<div class="input-group suit-date"><input type="text" name="sdw" ' \
+               'value="" class="vDateField " size="10" placeholder="Date" />' \
+               '<span class="input-group-text"><i class="bi bi-calendar3"></i></span></div>'
 
     def test_SuitDateWidget_output(self):
         sdw = SuitDateWidget(attrs={'placeholder': 'Date'})
-        output = sdw.render('sdw', '')
+        output = strip_aria(sdw.render('sdw', ''))
         self.assertHTMLEqual(
             self.get_SuitDateWidget_output(), output)
 
@@ -105,38 +107,28 @@ class WidgetsTestCase(TestCase):
         self.assertEqual('p', sdw.attrs['placeholder'])
 
     def get_SuitTimeWidget_output(self):
-        if django_version < (1, 11):
-            return '<div class="input-append suit-date suit-time"><input ' \
-                   'class="vTimeField input-small " name="sdw" ' \
-                   'placeholder="Time" size="8" type="text" /><span ' \
-                   'class="add-on"><i class="icon-time"></i></span></div>'
-        else:
-            return '<div class="input-append suit-date suit-time"><input ' \
-                   'type="text" name="sdw" value="" class="vTimeField input-small " ' \
-                   'size="8" placeholder="Time" /><span class="add-on">' \
-                   '<i class="icon-time"></i></span></div>'
+        return '<div class="input-group suit-date suit-time"><input type="text" ' \
+               'name="sdw" value="" class="vTimeField " size="8" placeholder="Time" />' \
+               '<span class="input-group-text"><i class="bi bi-clock"></i></span></div>'
 
     def test_SuitTimeWidget_output(self):
         sdw = SuitTimeWidget(attrs={'placeholder': 'Time'})
-        output = sdw.render('sdw', '')
+        output = strip_aria(sdw.render('sdw', ''))
         self.assertHTMLEqual(
             self.get_SuitTimeWidget_output(),
             output)
 
     def get_SuitSplitDateTimeWidget_output(self):
-        if django_version < (1, 11):
-            dwo = self.get_SuitDateWidget_output().replace('sdw', 'sdw_0')
-            two = self.get_SuitTimeWidget_output().replace('sdw', 'sdw_1')
-            return '<div class="datetime">%s %s</div>' % (dwo, two)
-        else:
-            return '<div class="datetime"><input type="text" name="sdw_0" ' \
-                   'class="vDateField input-small " size="10" placeholder="Date" ' \
-                   '/><input type="text" name="sdw_1" class="vTimeField input-small " ' \
-                   'size="8" placeholder="Time" /></div>'
+        # Sub widgets of an empty MultiWidget have no value attribute
+        dwo = self.get_SuitDateWidget_output().replace('sdw', 'sdw_0').replace(' value=""', '')
+        two = self.get_SuitTimeWidget_output().replace('sdw', 'sdw_1').replace(' value=""', '')
+        return '<div class="datetime">%s%s</div>' % (
+            dwo.replace(' placeholder="Date"', ' placeholder="%s"' % _('Date:')[:-1]),
+            two.replace(' placeholder="Time"', ' placeholder="%s"' % _('Time:')[:-1]))
 
     def test_SuitSplitDateTimeWidget(self):
         ssdtw = SuitSplitDateTimeWidget()
-        output = ssdtw.render('sdw', '')
+        output = strip_aria(ssdtw.render('sdw', ''))
         self.assertHTMLEqual(
             self.get_SuitSplitDateTimeWidget_output(),
             output)
@@ -156,12 +148,4 @@ class WidgetsTestCase(TestCase):
         txt = AutosizedTextarea()
         self.assertHTMLEqual(txt.render('txt', ''), (
             '<textarea class="autosize " cols="40" name="txt" '
-            'rows="2">\r\n</textarea><script type="text/javascript">Suit.$('
-            '\'#id_txt\').autosize();</script>'))
-
-    def test_AutosizedTextarea_media(self):
-        txt = AutosizedTextarea()
-        js_url = static('suit/js/jquery.autosize-min.js')
-        self.assertHTMLEqual(str(txt.media),
-                             '<script type="text/javascript" src="%s"></script>'
-                             % js_url)
+            'rows="2">\r\n</textarea>'))

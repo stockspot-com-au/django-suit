@@ -1,17 +1,23 @@
 {% extends "admin/index.html" %}
 {% load i18n %}
-{% load url from suit_compat %}
+
+{% block bodyclass %}{{ block.super }} app-{{ app_label }}{% endblock %}
 
 {% if not is_popup %}
+  {% block nav-breadcrumbs %}
+    <nav aria-label="{% translate 'Breadcrumbs' %}">
     {% block breadcrumbs %}
-        <ul class="breadcrumb">
-            <li><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-                <span class="divider">&raquo;</span></li>
-            {% for app in app_list %}
-                <li class="active">{% blocktrans with app.name as name %}{{ name }}{% endblocktrans %}</li>
-            {% endfor %}
-        </ul>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a></li>
+        {% for app in app_list %}
+          <li class="breadcrumb-item active" aria-current="page">{{ app.name }}</li>
+        {% endfor %}
+      </ol>
     {% endblock %}
+    </nav>
+  {% endblock %}
 {% endif %}
+
+{% block content_title %}{% endblock %}
 
 {% block sidebar %}{% endblock %}
