@@ -1992,7 +1992,8 @@ p.datetime {
   font-size: inherit;
 }
 
-.suit :is(.calendarbox h2, .calendar th, .calendar td, .clockbox, .calendar-cancel) {
+/* The box too: its width is 19em, so it must grow with the cells */
+.suit :is(.calendarbox, .calendarbox h2, .calendar th, .calendar td, .clockbox, .calendar-cancel) {
   font-size: 1rem;
 }
 
