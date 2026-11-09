@@ -110,6 +110,17 @@ Using few callable helpers you can customize change list row and cell attributes
    list_attributes
 
 
+List filters
+------------
+
+Extra change list filters, like a date range filter.
+
+.. toctree::
+   :maxdepth: 3
+
+   list_filters
+
+
 Wysiwyg editors
 ---------------
 

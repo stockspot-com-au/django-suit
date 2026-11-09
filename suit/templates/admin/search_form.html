@@ -12,6 +12,7 @@
         {% endif %}
         {% if cl.has_filters %}
           {% block filters %}
+            {% suit_list_filters_media cl %}
             <span class="search-filters">
               {% for spec in cl.filter_specs %}{% suit_list_filter_select cl spec %}{% endfor %}
             </span>

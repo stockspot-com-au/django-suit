@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib import admin
 
+from suit.filters import DateRangeFilter
+
 
 def test_app_label():
     return Book._meta.app_label
@@ -51,6 +53,23 @@ class User(models.Model):
     name = models.CharField(max_length=64)
 
 
+class Event(models.Model):
+    name = models.CharField(max_length=64)
+    happened_at = models.DateTimeField()
+
+    def __str__(self):
+        return self.name
+
+
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'happened_at')
+    list_filter = (('happened_at', DateRangeFilter),)
+
+
 admin.site.register(Book, BookAdmin)
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(User)
+
+# On its own site, so the menu tests' model counts of admin.site don't change
+filters_site = admin.AdminSite(name='filters')
+filters_site.register(Event, EventAdmin)

@@ -2,7 +2,7 @@ import inspect
 from copy import copy
 from urllib.parse import parse_qs
 
-from django import template
+from django import forms, template
 from django.template.loader import get_template
 from django.utils.safestring import mark_safe
 from django.contrib.admin.templatetags.admin_list import result_list
@@ -111,6 +111,18 @@ def suit_list_filter_select(cl, spec):
         'choices': choices,
         'spec': spec,
     })
+
+
+@register.simple_tag
+def suit_list_filters_media(cl):
+    """
+    Media of the list filters (e.g. the calendar scripts of DateRangeFilter),
+    merged so each file loads once however many filters use it.
+    """
+    media = forms.Media()
+    for spec in cl.filter_specs:
+        media += getattr(spec, 'media', forms.Media())
+    return media
 
 
 @register.filter

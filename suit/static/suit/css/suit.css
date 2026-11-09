@@ -2501,7 +2501,21 @@ tbody > tr:first-child .inline-sortable .sortable-up {
   min-width: 15rem;
 }
 
-/* Date filters in the search bar (e.g. django-suit-daterange-filter): input + calendar only */
+/* DateRangeFilter (suit.filters): "From: [date] To: [date]" */
+.date_range_filter {
+  display: inline-block;
+}
+
+.date_range_filter label {
+  position: relative;
+  top: 4px;
+}
+
+.date_range_filter .suit-date {
+  width: 130px;
+}
+
+/* Date filters in the search bar (e.g. DateRangeFilter): input + calendar only */
 #changelist-search .suit-date {
   flex-wrap: nowrap;
 }
