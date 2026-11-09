@@ -1,19 +1,15 @@
 import re
 import warnings
 
-import django
 from django import template
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.http import HttpRequest
 from django.urls import resolve, reverse
 
-from suit import utils
 from suit.config import get_config
 
 register = template.Library()
-
-django_version = utils.django_major_version()
 
 simple_tag = register.simple_tag
 
@@ -26,20 +22,12 @@ def get_menu(context, request):
     if not isinstance(request, HttpRequest):
         return None
 
-    # Try to get app list
-    if hasattr(request, 'current_app'):
-        # Django 1.8 uses request.current_app instead of context.current_app
-        template_response = get_admin_site(request.current_app).index(request)
-    else:
-        try:
-            template_response = get_admin_site(context.current_app).index(request)
-        # Django 1.10 removed the current_app parameter for some classes and functions. 
-        # Check the release notes.
-        except AttributeError:
-            template_response = get_admin_site(context.request.resolver_match.namespace).index(request)
+    current_app = getattr(request, 'current_app', None)
+    if not current_app and request.resolver_match:
+        current_app = request.resolver_match.namespace
 
     try:
-        app_list = template_response.context_data['app_list']
+        app_list = get_admin_site(current_app or 'admin').get_app_list(request)
     except Exception:
         return
 
@@ -48,20 +36,15 @@ def get_menu(context, request):
 
 def get_admin_site(current_app):
     """
-    Method tries to get actual admin.site class, if any custom admin sites
-    were used. Couldn't find any other references to actual class other than
-    in func_closer dict in index() func returned by resolver.
+    Return the AdminSite instance serving the given URL namespace, so custom
+    admin sites get their own app list. Falls back to the default admin.site.
     """
     try:
         resolver_match = resolve(reverse('%s:index' % current_app))
-        # Django 1.9 exposes AdminSite instance directly on view function
-        if hasattr(resolver_match.func, 'admin_site'):
-            return resolver_match.func.admin_site
-
-        for func_closure in resolver_match.func.__closure__:
-            if isinstance(func_closure.cell_contents, AdminSite):
-                return func_closure.cell_contents
-    except:
+        admin_site = getattr(resolver_match.func, 'admin_site', None)
+        if isinstance(admin_site, AdminSite):
+            return admin_site
+    except Exception:
         pass
     return admin.site
 

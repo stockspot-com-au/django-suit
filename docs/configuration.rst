@@ -141,12 +141,12 @@ Automatically replaces app's (parent link) url with url of first model's url (ch
 MENU_ICONS
 ^^^^^^^^^^
 
-Set app icons. Use any of Twitter Bootstrap `icon classes <http://twitter.github.com/bootstrap/base-css.html#icons>`_ or add your own. Twitter Bootstrap icons are provided by `Glyphicons <http://glyphicons.com/>`_. This parameter is useful, if you don't use ``MENU`` parameter (see below) and just want to set icons for default apps::
+Set app icons. Use any of the `Bootstrap Icons <https://icons.getbootstrap.com/>`_ classes (``bi bi-<name>``) or add your own. Bootstrap 2 names like ``icon-lock`` still work. This parameter is useful, if you don't use ``MENU`` parameter (see below) and just want to set icons for default apps::
 
   SUIT_CONFIG = {
       'MENU_ICONS': {
-          'sites': 'icon-leaf',
-          'auth': 'icon-lock',
+          'sites': 'bi bi-globe',
+          'auth': 'bi bi-lock',
       }
   }
 

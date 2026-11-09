@@ -1,12 +1,34 @@
 import copy
-from django.conf import settings
 from django.contrib.admin import ModelAdmin
 from django.contrib.admin.views.main import ChangeList
 from django.forms import ModelForm
 from django.contrib import admin
 from django.db import models
+from django.utils.html import format_html
 from suit.widgets import NumberInput, SuitSplitDateTimeWidget
 from suit.compat import ct_admin
+from suit.templatetags.suit_tags import versioned_static
+
+
+class VersionedScript:
+    """
+    Form media script whose URL carries the Suit version (see suit_static).
+    """
+
+    def __init__(self, path):
+        self.path = path
+
+    def __eq__(self, other):
+        return isinstance(other, VersionedScript) and other.path == self.path
+
+    def __hash__(self):
+        return hash(self.path)
+
+    def __str__(self):
+        return self.path
+
+    def __html__(self):
+        return format_html('<script src="{}"></script>', versioned_static(self.path))
 
 
 class SortableModelAdminBase(object):
@@ -16,7 +38,7 @@ class SortableModelAdminBase(object):
     sortable = 'order'
 
     class Media:
-        js = ('suit/js/sortables.js',)
+        js = (VersionedScript('suit/js/sortables.js'),)
 
 
 class SortableListForm(ModelForm):
@@ -27,7 +49,7 @@ class SortableListForm(ModelForm):
     class Meta:
         widgets = {
             'order': NumberInput(
-                attrs={'class': 'hide input-mini suit-sortable'})
+                attrs={'class': 'd-none suit-sortable'})
         }
 
 
@@ -183,18 +205,4 @@ class SortableModelAdmin(SortableModelAdminBase, ModelAdmin):
                 next_order = 1
             setattr(obj, self.sortable, next_order)
         super(SortableModelAdmin, self).save_model(request, obj, form, change)
-
-
-# Quite aggressive detection and intrusion into Django CMS
-# Didn't found any other solutions though
-if 'cms' in settings.INSTALLED_APPS:
-    try:
-        from cms.admin.forms import PageForm
-
-        PageForm.Meta.widgets = {
-            'publication_date': SuitSplitDateTimeWidget,
-            'publication_end_date': SuitSplitDateTimeWidget,
-        }
-    except ImportError:
-        pass
 
